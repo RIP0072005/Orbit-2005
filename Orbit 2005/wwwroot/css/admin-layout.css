@@ -1,0 +1,111 @@
+﻿:root {
+    --space-dark: #0b0d17;
+    --space-sidebar: #161b22;
+    --cosmic-accent: #7d5fff;
+    --text-light: #e6edf3;
+    --border-color: #30363d;
+}
+
+body {
+    background-color: var(--space-dark);
+    color: var(--text-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* Sidebar Style */
+.aside-sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: var(--space-sidebar);
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar-brand {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--cosmic-accent);
+}
+
+.aside-sidebar a {
+    display: block;
+    padding: 15px 25px;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+    .aside-sidebar a:hover {
+        background-color: var(--cosmic-accent);
+        color: white;
+    }
+
+/* Main Content Adjustment */
+.main-wrapper {
+    margin-left: 250px; /* Space for the LTR sidebar */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar & Header */
+.cosmic-nav {
+    background-color: rgba(22, 27, 34, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand {
+    color: var(--text-light) !important;
+}
+
+/* Footer */
+footer {
+    background-color: var(--space-sidebar);
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+}
+
+/* Sub-menu styling */
+.sub-menu {
+    display: none;
+    background-color: #1c2128;
+    padding-left: 15px;
+}
+
+    .sub-menu a {
+        font-size: 0.9rem;
+        padding: 10px 25px !important;
+        border-left: 2px solid transparent; /* خليتها left عشان الانجليزي */
+    }
+
+        .sub-menu a:hover {
+            border-left: 2px solid var(--cosmic-accent);
+        }
+
+/* عممنا الكلاس ده لكل الزراير اللي بتفتح قوائم */
+.dropdown-toggle {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrow {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.rotate-arrow {
+    transform: rotate(-180deg);
+}
+
+.show-menu {
+    display: block !important;
+}

@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section Styles {
+    <link href="~/css/admin-products.css" rel="stylesheet" />
+}
+@model List<Planet>
+
+@section Breadcrumb {
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-transparent p-0 border-bottom border-secondary pb-2">
+            <li class="breadcrumb-item">
+                <a asp-controller="Admin" asp-action="Index" class="text-decoration-none" style="color: var(--cosmic-accent);">Orbit 2005</a>
+            </li>
+            <li class="breadcrumb-item active text-light" aria-current="page">Current Page Name</li>
+        </ol>
+    </nav>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="cosmic-page-title">Add New Space Product</h2>
+    <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary">Back to Inventory</a>
+</div>
+
+<div class="card cosmic-card mx-auto" style="max-width: 800px;">
+    <div class="card-body p-4">
+        <form action="#" method="post">
+
+            <div class="mb-3">
+                <label for="productName" class="form-label cosmic-label">Product Name</label>
+                <input type="text" name="name" class="form-control cosmic-input" id="productName" placeholder="e.g., Lunar Dust" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="productPrice" class="form-label cosmic-label">Price ($)</label>
+                <input type="number" name="price" step="0.01" class="form-control cosmic-input" id="productPrice" placeholder="0.00" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="productDescription" class="form-label cosmic-label">Description</label>
+                <textarea class="form-control cosmic-input" name="description" id="productDescription" rows="5" placeholder="Describe the rare materials, origin, and uses..." required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="productPrice" class="form-label cosmic-label">Available Amount</label>
+                <input type="number" name="amount" step="10" class="form-control cosmic-input" id="productPrice" placeholder="" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="productPlanet" class="form-label cosmic-label">Origin Planet (Category)</label>
+                <select class="form-select cosmic-input" id="productPlanet" name="planetId">
+                    <option value="" disabled selected>Select a planet</option>
+                    @foreach(var planet in Model)
+                    {
+                        <option value="@planet.Id">@planet.Name</option>
+                    }                  
+                </select>
+            </div>
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-cosmic px-5 py-2 fw-bold">Launch Product</button>
+            </div>
+
+        </form>
+    </div>
+</div>

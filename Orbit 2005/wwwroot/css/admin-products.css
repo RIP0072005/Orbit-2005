@@ -1,0 +1,102 @@
+﻿/* Styling for the Details button */
+.btn-info {
+    background-color: #00d2ff;
+    border: none;
+    color: #0b0d17;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+    .btn-info:hover {
+        background-color: #00a8cc;
+        box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+        transform: translateY(-1px);
+    }
+
+/* Adjusting Table Text for better focus */
+.cosmic-table td {
+    font-size: 1.05rem;
+    padding: 15px 0;
+}
+
+
+/* ========================================================
+   product.css - Shared styles for Create, Update, Details, Delete
+   ======================================================== */
+
+/* Form Labels */
+.cosmic-label {
+    color: var(--text-light);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+/* Enhanced inputs for forms */
+.cosmic-input {
+    background-color: var(--space-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+    /* Input Focus Effect */
+    .cosmic-input:focus {
+        background-color: #0d1117;
+        border-color: var(--cosmic-accent);
+        box-shadow: 0 0 10px rgba(125, 95, 255, 0.2);
+        color: #fff;
+    }
+
+    /* Placeholder color */
+    .cosmic-input::placeholder {
+        color: #6e7681;
+    }
+
+/* Cards used in Forms & Details */
+.cosmic-card {
+    background-color: var(--space-sidebar);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Warning Color for Update/Edit accents */
+.text-warning {
+    color: #e3a857 !important; /* Saturn gold color */
+}
+
+/* General button padding override for forms */
+.btn-cosmic, .btn-warning {
+    border-radius: 6px;
+    letter-spacing: 1px;
+}
+
+/* --- Additions to product.css for Details Image --- */
+
+/* Frame around the image */
+.product-image-frame {
+    background-color: var(--space-dark);
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* The actual image styling */
+.product-details-img {
+    max-height: 300px; /* limits height, width is auto (img-fluid) */
+    object-fit: contain; /* ensures image fits without stretching */
+    filter: drop-shadow(0 0 10px rgba(125, 95, 255, 0.2)); /* subtle cosmic glow */
+}
+
+/* Description box override for details page */
+.description-box {
+    background-color: var(--space-dark);
+    border: 1px solid var(--border-color);
+}
+
+/* Helper class for big metric numbers */
+.metric-value {
+    letter-spacing: -1px;
+}

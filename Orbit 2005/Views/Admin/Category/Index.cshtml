@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Breadcrumb {
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-transparent p-0 border-bottom border-secondary pb-2">
+            <li class="breadcrumb-item">
+                <a asp-controller="Admin" asp-action="Index" class="text-decoration-none" style="color: var(--cosmic-accent);">Orbit 2005</a>
+            </li>
+            <li class="breadcrumb-item active text-light" aria-current="page">Current Page Name</li>
+        </ol>
+    </nav>
+}

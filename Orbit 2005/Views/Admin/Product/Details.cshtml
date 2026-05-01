@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model Product
+@section Styles {
+    <link href="~/css/admin-products.css" rel="stylesheet" />
+}
+
+@section Breadcrumb {
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-transparent p-0 border-bottom border-secondary pb-2">
+            <li class="breadcrumb-item">
+                <a asp-controller="Admin" asp-action="Index" class="text-decoration-none" style="color: var(--cosmic-accent);">Orbit 2005</a>
+            </li>
+            <li class="breadcrumb-item active text-light" aria-current="page">Current Page Name</li>
+        </ol>
+    </nav>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="cosmic-page-title">Product Details Command Center</h2>
+    <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary">Back to Inventory</a>
+</div>
+
+<div class="card cosmic-card mx-auto" style="max-width: 900px;">
+    <div class="card-header border-bottom border-secondary pb-3 pt-3 bg-transparent">
+        <h4 class="mb-0 text-info">#@Model.Id - @Model.Name</h4>
+    </div>
+
+    <div class="card-body p-4">
+        <div class="row mb-4">
+            <div class="col-md-5 text-center mb-3 mb-md-0">
+                <div class="product-image-frame p-2 rounded">
+                    <img src="~/images/novestar p1.png" alt="Product Placeholder" class="img-fluid rounded product-details-img" loading="lazy">
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="mb-3 border-bottom border-secondary pb-2">
+                    <p class="cosmic-label mb-1">Origin Planet</p>
+                    <span class="badge bg-planet-mars fs-6 px-3 py-2">Planet ID: @Model.planetId (@Model.Planet?.Name)</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <p class="cosmic-label mb-1">Price</p>
+                        <h3 class="text-success fw-bold metric-value">$@Model.Price</h3>
+                    </div>
+                    <div class="col-6">
+                        <p class="cosmic-label mb-1">Available Amount</p>
+                        <h3 class="text-light fw-bold metric-value">@Model.Amount</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <p class="cosmic-label mb-2">Description</p>
+            <div class="p-3 rounded description-box">
+                <p class="text-light mb-0" style="line-height: 1.6;">
+                    @Model.Description
+                </p>
+            </div>
+        </div>
+
+        <div class="alert bg-transparent border border-warning text-warning d-flex align-items-center rounded p-3 mb-4" role="alert">
+            <div>
+                <strong>System Note:</strong> Inventory tracking is not currently active in the database schema.
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 mt-2 pt-3 border-top border-secondary">
+            <a asp-controller="Product" asp-action="Update" asp-route-id="@Model.Id" class="btn btn-warning text-dark px-4 fw-bold">Edit</a>
+            <button asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id"  class="btn btn-danger px-4 fw-bold" onclick="confirmDelete()">Delete</button>
+        </div>
+
+    </div>
+</div>
+

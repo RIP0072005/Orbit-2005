@@ -1,0 +1,131 @@
+﻿:root {
+    --deep-space: #05070a;
+    --star-dust: #1a1e29;
+    --cosmic-accent: #00f0ff; /* Neon Cyan for a futuristic vibe */
+    --cosmic-accent-hover: #00b3cc;
+    --text-primary: #f0f6fc;
+    --text-muted: #8b949e;
+    --nav-glass: rgba(5, 7, 10, 0.85);
+}
+
+body {
+    background-color: var(--deep-space);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Cosmic Navbar */
+.cosmic-navbar {
+    background-color: var(--nav-glass);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.orbit-brand {
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--text-primary) !important;
+    font-size: 1.5rem;
+}
+
+    .orbit-brand .brand-icon {
+        display: inline-block;
+        transition: transform 0.5s ease;
+    }
+
+    .orbit-brand:hover .brand-icon {
+        transform: rotate(20deg) scale(1.1);
+    }
+
+.navbar-nav .nav-link {
+    color: var(--text-muted) !important;
+    font-weight: 500;
+    margin: 0 10px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+        color: var(--cosmic-accent) !important;
+    }
+
+    /* Animated Underline for Nav Links */
+    .navbar-nav .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 50%;
+        background-color: var(--cosmic-accent);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .navbar-nav .nav-link:hover::after,
+    .navbar-nav .nav-link.active::after {
+        width: 100%;
+    }
+
+/* Custom Buttons */
+.btn-outline-cosmic {
+    color: var(--cosmic-accent);
+    border: 1px solid var(--cosmic-accent);
+    border-radius: 20px;
+    padding: 6px 20px;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-cosmic:hover {
+        background-color: var(--cosmic-accent);
+        color: var(--deep-space);
+        box-shadow: 0 0 10px var(--cosmic-accent);
+    }
+
+.btn-cosmic {
+    background-color: var(--cosmic-accent);
+    color: var(--deep-space);
+    font-weight: bold;
+    border-radius: 25px;
+    padding: 10px 30px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+    .btn-cosmic:hover {
+        background-color: var(--cosmic-accent-hover);
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+        transform: translateY(-2px);
+    }
+
+/* Main Content Area */
+.main-content {
+    flex: 1; /* Pushes footer to the bottom */
+    padding-top: 80px; /* To prevent content from hiding behind fixed navbar */
+}
+
+.cosmic-title {
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+/* Footer */
+.cosmic-footer {
+    background-color: var(--star-dust);
+    padding: 20px 0;
+    border-top: 1px solid rgba(0, 240, 255, 0.1);
+    margin-top: auto;
+}
+
+/* Custom Toggler for Mobile */
+.custom-toggler {
+    border-color: rgba(0, 240, 255, 0.5);
+}
+
+    .custom-toggler .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 240, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
