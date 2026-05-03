@@ -1,7 +1,10 @@
 ﻿@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+@model List<Planet>
+@section Styles {
+    <link href="~/css/admin-products.css" rel="stylesheet" />
+}
 @section Breadcrumb {
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb bg-transparent p-0 border-bottom border-secondary pb-2">
@@ -12,3 +15,50 @@
         </ol>
     </nav>
 }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="cosmic-page-title">Planet Inventory</h2>
+    <a asp-controller="Category" asp-action="Create" class="btn btn-cosmic">+ Add New Planet</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table cosmic-table align-middle text-center">
+        <thead>
+            <tr>
+                <th style="width: 15%;">Planet ID</th>
+                <th style="width: 40%;">Name</th>
+                <th style="width: 45%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-black-50 fw-bold">@item.Id</td>
+                    <td class="text-black-50 fw-bold">@item.Name</td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a asp-controller="Category" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info px-3">Details</a>
+                            <a asp-controller="Category" asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning px-3">Edit</a>
+                            <!--Version 1 of deleting-->
+                            @* <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this product?');" class="btn btn-sm btn-outline-danger px-3">Delete</a> *@
+
+                            <!--Version 2 of deleting-->
+                            @* <form asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are You Sure You Want To delete this product?')">
+                                <button type="submit" class="btn btn-sm btn-outline-danger px-3">Delete</button>
+                            </form> *@
+
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger px-3">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="mt-4 p-3 rounded" style="background-color: rgba(125, 95, 255, 0.05); border: 1px dashed var(--border-color);">
+    <p class="small text-muted mb-0">
+        <i class="bi bi-info-circle"></i> Showing active Planets from <strong>Orbit 2005</strong> database. Use 'Details' to view descriptions, and more info about each planet.
+    </p>
+</div>

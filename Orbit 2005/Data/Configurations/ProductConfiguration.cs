@@ -16,7 +16,7 @@ namespace Orbit_2005.Data.Configurations
             P.HasOne(p => p.Planet)
                 .WithMany(pl => pl.Products)
                 .HasForeignKey(p => p.planetId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.SetNull);
 
             P.Property(p => p.Amount)
                 .HasDefaultValue(100);

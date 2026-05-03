@@ -74,17 +74,29 @@ namespace Orbit_2005.Controllers.Admin
         }
 
         [Route("admin/product/delete/{id}")]
-        [HttpPost]
-        public IActionResult delete(int id)
+        public IActionResult Delete(int id)
         {
-            var product = context.Products.FirstOrDefault(p => p.Id == id);
-            if (product == null)
+            if (id == 0)
+                return BadRequest();
+
+            var p = context.Products.FirstOrDefault(p => p.Id == id);
+            if (p == null)
             {
                 return NotFound();
             }
+            return View("~/Views/Admin/Product/Delete.cshtml", p);
+
+        }
+
+        [Route("admin/product/delete/{id}")]
+        [HttpPost]
+        public IActionResult Delete(Product product)
+        {
             context.Products.Remove(product);
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        
     }
 }

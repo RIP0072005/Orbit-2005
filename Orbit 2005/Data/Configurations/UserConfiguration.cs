@@ -27,7 +27,7 @@ namespace Orbit_2005.Data.Configurations
             U.HasOne(u => u.Planet)
                 .WithMany(p => p.Users)
                 .HasForeignKey(u => u.PlanetId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.SetNull);
 
             U.HasMany(u => u.Orders)
                 .WithOne(o => o.User)

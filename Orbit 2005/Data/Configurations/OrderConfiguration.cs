@@ -12,6 +12,9 @@ namespace Orbit_2005.Data.Configurations
             O.HasKey("Id");
             O.Property(o => o.Id)
                 .UseIdentityColumn(1000000, 1);
+
+            O.Property(o => o.Status)
+                .HasDefaultValue(OrderStatus.pending);
         }
     }
 }

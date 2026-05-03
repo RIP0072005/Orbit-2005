@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Orbit_2005.Data;
 
@@ -10,9 +11,11 @@ using Orbit_2005.Data;
 namespace Orbit_2005.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260501221312_SetValuesToNullWhenDeletingPlanet")]
+    partial class SetValuesToNullWhenDeletingPlanet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +32,7 @@ namespace Orbit_2005.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1000000L);
 
-                    b.Property<double>("Costing")
+                    b.Property<double>("Cosing")
                         .HasColumnType("float");
 
                     b.Property<string>("Description")
@@ -40,11 +43,6 @@ namespace Orbit_2005.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");

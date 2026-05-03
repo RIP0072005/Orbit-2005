@@ -1,7 +1,10 @@
 ﻿@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+@section Styles {
+    <link href="~/css/admin-products.css" rel="stylesheet" />
+}
+@model Planet
 @section Breadcrumb {
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb bg-transparent p-0 border-bottom border-secondary pb-2">
@@ -12,3 +15,40 @@
         </ol>
     </nav>
 }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="cosmic-page-title">Update Product</h2>
+    <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary">Back to Inventory</a>
+</div>
+
+<div class="card cosmic-card mx-auto" style="max-width: 800px;">
+    <div class="card-header border-bottom border-secondary pb-3 pt-3 bg-transparent">
+        <h5 class="mb-0 text-warning"><i class="bi bi-pencil-square"></i> Editing Planet ID: #@Model.Id</h5>
+    </div>
+
+    <div class="card-body p-4">
+        <form asp-controller="Category" asp-action="Update" method="post">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <div class="mb-3">
+                <label for="editProductName" class="form-label cosmic-label">Planet Name</label>
+                <input type="text" name="Name" class="form-control cosmic-input" id="editProductName" value="@Model.Name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="editProductPrice" class="form-label cosmic-label">Galaxy</label>
+                <input type="text" name="Galaxy" step="0.01" class="form-control cosmic-input" id="editProductPrice" value="@Model.Galaxy" required>
+            </div>
+
+            
+            <div class="mb-4">
+                <label for="editProductDescription" class="form-label cosmic-label">Description</label>
+                <textarea class="form-control cosmic-input" id="editProductDescription" name="Description" rows="5">@Model.Description</textarea>
+            </div>
+
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-warning px-5 py-2 fw-bold text-dark">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>

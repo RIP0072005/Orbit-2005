@@ -16,3 +16,94 @@
     <h2>Welcome to Orbit 2005 Command Center</h2>
     <p>This is a static HTML mockup. You will integrate the MVC views here later.</p>
 </div>
+
+<!-- Admin Dashboard Content -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="cosmic-page-title">Command Center Dashboard</h2>
+    <span class="text-muted">System Status: <span class="text-success fw-bold">Online</span></span>
+</div>
+
+<!-- 1. Galactic KPIs (Quick Stats) -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card cosmic-card text-center p-3 h-100 border-info">
+            <h6 class="text-muted text-uppercase mb-2">Total Products</h6>
+            <h2 class="text-info fw-bold mb-0">42</h2>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card cosmic-card text-center p-3 h-100 border-primary">
+            <h6 class="text-muted text-uppercase mb-2">Discovered Planets</h6>
+            <h2 class="text-primary fw-bold mb-0">6</h2>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card cosmic-card text-center p-3 h-100 border-warning">
+            <h6 class="text-muted text-uppercase mb-2">Total Orders</h6>
+            <h2 class="text-warning fw-bold mb-0">1,038</h2>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card cosmic-card text-center p-3 h-100 border-success">
+            <h6 class="text-muted text-uppercase mb-2">Total Revenue</h6>
+            <h2 class="text-success fw-bold mb-0">$84,500</h2>
+        </div>
+    </div>
+</div>
+
+<!-- 2. System Alerts (Low Stock Warning) -->
+<div class="mb-4">
+    <h4 class="cosmic-label mb-3">System Alerts</h4>
+    <div class="alert bg-transparent border border-danger text-danger d-flex justify-content-between align-items-center rounded p-3" role="alert">
+        <div>
+            <strong>⚠️ Low Stock Alert:</strong> Only 3 units left of <b>#10000 - Babel Fish</b>.
+        </div>
+        <a href="edit-product.html" class="btn btn-sm btn-outline-danger">Restock Now</a>
+    </div>
+</div>
+
+<!-- 3. Recent Transmissions (Latest Orders Table) -->
+<div class="card cosmic-card">
+    <div class="card-header border-bottom border-secondary pb-3 pt-3 bg-transparent d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 text-light">Recent Galactic Orders</h5>
+        <a href="#" class="btn btn-sm btn-outline-info">View All Orders</a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover mb-0 text-center cosmic-table">
+                <thead class="table-active">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Destination Sector</th>
+                        <th>Total ($)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#ORD-992</td>
+                        <td>Zaphod Beeblebrox</td>
+                        <td>Sector ZZ9 Plural Z Alpha</td>
+                        <td class="text-success fw-bold">$1,041.99</td>
+                        <td><span class="badge bg-warning text-dark">Processing</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-991</td>
+                        <td>Ford Prefect</td>
+                        <td>Ursa Minor Beta</td>
+                        <td class="text-success fw-bold">$42.00</td>
+                        <td><span class="badge bg-success">Shipped</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-990</td>
+                        <td>Arthur Dent</td>
+                        <td>Magrathea</td>
+                        <td class="text-success fw-bold">$150.00</td>
+                        <td><span class="badge bg-success">Shipped</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

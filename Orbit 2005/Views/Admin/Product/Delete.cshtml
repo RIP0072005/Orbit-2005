@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+@model Product
 @section Breadcrumb {
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb bg-transparent p-0 border-bottom border-secondary pb-2">
@@ -13,4 +13,53 @@
     </nav>
 }
 
-<h1>Hello From Product Controller</h1>
+<!-- Delete Product Page Content -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="cosmic-page-title text-danger">Delete Product</h2>
+    <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary">Back to Inventory</a>
+</div>
+
+<div class="card cosmic-card mx-auto" style="max-width: 650px; border-color: #dc3545;">
+    <!-- Warning Header -->
+    <div class="card-header border-bottom border-secondary pb-3 pt-4 bg-transparent text-center">
+        <h4 class="mb-0 text-danger">⚠️ Deletion Confirmation</h4>
+        <p class="text-muted mt-2 mb-0">Are you sure you want to permanently delete this item from the galaxy? This action cannot be undone.</p>
+    </div>
+
+    <div class="card-body p-4">
+        <!-- Product Snapshot -->
+        <div class="d-flex flex-column flex-md-row gap-4 mb-4 align-items-center align-items-md-start">
+
+            <!-- Product Image -->
+            <div class="product-placeholder-box p-2 rounded text-center" style="width: 140px; flex-shrink: 0;">
+                <img src="/images/novestar p1.png" alt="Product Image" class="img-fluid rounded product-placeholder-img w-100" style="max-height: 100px;">
+            </div>
+
+            <!-- Product Details -->
+            <div class="flex-grow-1 text-center text-md-start">
+                <!-- Hardcoded Babel Fish for preview purposes -->
+                <h5 class="text-info mb-1">#@Model.Id - @Model.Name</h5>
+                <h4 class="text-success fw-bold mb-3">$@Model.Price</h4>
+
+                <div class="p-2 rounded description-box" style="font-size: 0.9rem;">
+                    <p class="text-light mb-0">
+                        @Model.Description
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-center gap-3 mt-4 pt-3 border-top border-secondary">
+            <!-- Cancel Button -->
+            <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary px-5 py-2 fw-bold">Cancel</a>
+
+            <!-- Delete Form (Ready for MVC) -->
+            <form asp-controller="Product" asp-action="Delete" method="post" onsubmit="return confirm('Are you sure?');" class="m-0">
+                <!-- In MVC, you will pass the ID in a hidden input or route -->
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <button type="submit" class="btn btn-danger px-5 py-2 fw-bold">Yes, Delete It</button>
+            </form>
+        </div>
+    </div>
+</div>

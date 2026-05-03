@@ -1,7 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+@section Styles {
+    <link href="~/css/admin-products.css" rel="stylesheet" />
+}
 @section Breadcrumb {
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb bg-transparent p-0 border-bottom border-secondary pb-2">
@@ -12,3 +14,30 @@
         </ol>
     </nav>
 }
+
+<div class="card cosmic-card mx-auto" style="max-width: 800px;">
+    <div class="card-body p-4">
+        <form action="#" method="post">
+
+            <div class="mb-3">
+                <label for="productName" class="form-label cosmic-label">Planet Name</label>
+                <input type="text" name="name" class="form-control cosmic-input" id="productName" placeholder="e.g., Earth" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="productPrice" class="form-label cosmic-label">Galaxy</label>
+                <input type="text" name="galaxy" class="form-control cosmic-input" id="productPrice" placeholder="e.g., Milky Way" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="productDescription" class="form-label cosmic-label">Description</label>
+                <textarea class="form-control cosmic-input" name="description" id="productDescription" rows="5" placeholder="if something is special about this planet, mention it" required></textarea>
+            </div>
+            
+            <div class="text-end">
+                <button type="submit" class="btn btn-cosmic px-5 py-2 fw-bold text-white-50 btn-info">Launch Product</button>
+            </div>
+
+        </form>
+    </div>
+</div>
