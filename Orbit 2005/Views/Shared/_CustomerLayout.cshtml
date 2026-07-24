@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-lg cosmic-navbar fixed-top">
             <div class="container">
-                <a class="navbar-brand orbit-brand" href="index.html">
+                <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="navbar-brand orbit-brand">
                     <span class="brand-icon">🪐</span> Orbit 2005
                 </a>
                 <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +26,7 @@
                             <a class="nav-link active" href="index.html">Home Station</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="planets.html">Explore Planets</a>
+                            <a asp-controller="planet" asp-action="index" class="nav-link">Explore Planets</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="shop.html">Galactic Shop</a>
@@ -35,7 +35,7 @@
                     
                     <ul class="navbar-nav align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link cart-link" href="cart.html">
+                            <a asp-controller="features" asp-action="cart" class="nav-link cart-link">
                                 Cart <span class="badge rounded-pill bg-cosmic-accent">0</span>
                             </a>
                         </li>

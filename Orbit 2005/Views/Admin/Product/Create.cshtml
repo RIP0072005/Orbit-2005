@@ -4,7 +4,7 @@
 @section Styles {
     <link href="~/css/admin-products.css" rel="stylesheet" />
 }
-@model List<Planet>
+@model Product
 
 @section Breadcrumb {
     <nav aria-label="breadcrumb" class="mb-4">
@@ -22,38 +22,48 @@
     <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary">Back to Inventory</a>
 </div>
 
+
+@if(TempData["successMsg"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["successMsg"]
+    </div>
+}
 <div class="card cosmic-card mx-auto" style="max-width: 800px;">
     <div class="card-body p-4">
-        <form action="#" method="post">
+        @* <div class="text-danger" asp-validation-summary="All"></div> *@
+        <form asp-controller="Product" asp-action="Create" method="post">
 
             <div class="mb-3">
-                <label for="productName" class="form-label cosmic-label">Product Name</label>
-                <input type="text" name="name" class="form-control cosmic-input" id="productName" placeholder="e.g., Lunar Dust" required>
+                <label asp-for="Name" class="form-label cosmic-label">Product Name</label>
+                <input asp-for="Name" class="form-control cosmic-input" placeholder="e.g., Lunar Dust">
+               
+                <span class="text-white-50" asp-validation-for = "Name"></span>
+                
             </div>
 
             <div class="mb-3">
-                <label for="productPrice" class="form-label cosmic-label">Price ($)</label>
-                <input type="number" name="price" step="0.01" class="form-control cosmic-input" id="productPrice" placeholder="0.00" required>
+                <label asp-for="Price" class="form-label cosmic-label">Price ($)</label>
+                <input asp-for="Price" type="number" step="0.01" class="form-control cosmic-input" id="productPrice" placeholder="0.00">
+                <span class="text-white-50" asp-validation-for="Price"></span>
             </div>
 
             <div class="mb-4">
-                <label for="productDescription" class="form-label cosmic-label">Description</label>
-                <textarea class="form-control cosmic-input" name="description" id="productDescription" rows="5" placeholder="Describe the rare materials, origin, and uses..." required></textarea>
+                <label asp-for="Description" class="form-label cosmic-label">Description</label>
+                <textarea asp-for="Description" class="form-control cosmic-input" id="productDescription" rows="5" placeholder="Describe the rare materials, origin, and uses..."></textarea>
+                <span class="text-white-50" asp-validation-for="Description"></span>
             </div>
 
             <div class="mb-3">
-                <label for="productPrice" class="form-label cosmic-label">Available Amount</label>
-                <input type="number" name="amount" step="10" class="form-control cosmic-input" id="productPrice" placeholder="" required>
+                <label asp-for="Amount" class="form-label cosmic-label">Available Amount</label>
+                <input asp-for="Amount" type="number" step="1" class="form-control cosmic-input" id="productAmount" placeholder="" required>
+                <span class="text-white-50" asp-validation-for="Amount"></span>
             </div>
 
             <div class="mb-3">
-                <label for="productPlanet" class="form-label cosmic-label">Origin Planet (Category)</label>
-                <select class="form-select cosmic-input" id="productPlanet" name="planetId">
+                <label asp-for="planetId" class="form-label cosmic-label">Origin Planet (Category)</label>
+                <select asp-for="planetId" class="form-select cosmic-input" asp-items="ViewBag.planets">
                     <option value="" disabled selected>Select a planet</option>
-                    @foreach(var planet in Model)
-                    {
-                        <option value="@planet.Id">@planet.Name</option>
-                    }                  
                 </select>
             </div>
 
@@ -64,3 +74,9 @@
         </form>
     </div>
 </div>
+@section Scripts
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}

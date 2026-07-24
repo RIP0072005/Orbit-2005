@@ -1,4 +1,6 @@
-﻿namespace Orbit_2005.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace Orbit_2005.Models
 {
     public enum OrderStatus
     {
@@ -15,7 +17,7 @@
         public string? Description { get; set; }
         public double Costing { get; set; }
         public double? Discount { get; set; }
-
+        public string Destination { get; set; }
         public OrderStatus Status { get; set; }
         public ICollection<ProductOrder>? ProductOrders { get; set; }
 

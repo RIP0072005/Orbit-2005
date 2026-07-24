@@ -1,57 +1,64 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using Orbit_2005.Data;
 using Orbit_2005.Models;
+using Orbit_2005.Repositories;
+using Orbit_2005.Services;
 
 namespace Orbit_2005.Controllers.Admin
 {
+    [Route("admin/planets")]
     public class CategoryController : Controller
     {
-        private readonly AppDbContext context;
+        private readonly CategoryService categoryService;
 
-        public CategoryController()
+        public CategoryController(CategoryService _categoryService)
         {
-            context = new AppDbContext();
+            categoryService = _categoryService;
         }
-        [Route("admin/planets")]
+
+        [Route("")]
         public IActionResult Index()
         {
-            var planets = context.Planets.ToList();
+            var planets = categoryService.GetAll();
             return View("~/Views/Admin/Category/Index.cshtml", planets);
         }
 
-        [Route("admin/planets/{id}")]
+        [Route("{id:int}")]
         public IActionResult Details(int id)
         {
-            if (id == 0)
-                return BadRequest();
-            var p = context.Planets.FirstOrDefault(p => p.Id == id);
+            var p = categoryService.GetById(id);
 
             if (p == null)
                 return NotFound();
             return View("~/Views/Admin/Category/Details.cshtml", p);
         }
 
-        [Route("admin/planet/create")]
+        [Route("create")]
         public IActionResult Create()
         {
             return View("~/Views/Admin/Category/Create.cshtml");
         }
 
-        [Route("admin/planet/create")]
+        [Route("create")]
         [HttpPost]
-        public IActionResult Create(Planet p)
+        public IActionResult Create(Planet p, [FromServices] IValidator<Planet> validator)
         {
-            context.Planets.Add(p);
-            context.SaveChanges();
-            return RedirectToAction("Index");
+            ValidateData(p, validator);
+            if (ModelState.IsValid)
+            {
+                categoryService.Add(p);
+                TempData["successMsg"] = "Planet is Added Successfully";
+                return RedirectToAction("Create");
+            }
+            return View("~/Views/Admin/Category/Create.cshtml", p);
         }
 
-        [Route("admin/planet/update/{id?}")]
-        public IActionResult Update(int? id)
+        [Route("update/{id}")]
+        public IActionResult Update(int id)
         {
-            if (id == null)
-                return BadRequest();
-            var p = context.Planets.FirstOrDefault(p => p.Id == id);
+            var p = categoryService.GetById(id);
             if (p == null)
             {
                 return NotFound();
@@ -60,22 +67,25 @@ namespace Orbit_2005.Controllers.Admin
             return View("~/Views/Admin/Category/Update.cshtml", p);
         }
 
-        [Route("admin/planet/update/{id}")]
+        [Route("update/{id}")]
         [HttpPost]
-        public IActionResult Update(Planet p)
+        public IActionResult Update(Planet p, [FromServices] IValidator<Planet> validator)
         {
-            context.Planets.Update(p);
-            context.SaveChanges();
-            return RedirectToAction("Index");
+            ValidateData(p, validator);
+
+            if (ModelState.IsValid)
+            {
+                categoryService.Update(p);
+                return RedirectToAction("Index");
+            }
+            TempData["errorMsg"] = "Enter Valid Data";
+            return View("~/Views/Admin/Category/Update.cshtml", p);
         }
 
-        [Route("admin/planet/delete/{id}")]
+        [Route("delete/{id}")]
         public IActionResult Delete(int id)
         {
-            if (id == 0)
-                return BadRequest();
-
-            var p = context.Planets.FirstOrDefault(p => p.Id == id);
+            var p = categoryService.GetById(id);
             if (p == null)
             {
                 return NotFound();
@@ -84,13 +94,22 @@ namespace Orbit_2005.Controllers.Admin
 
         }
 
-        [Route("admin/planet/delete/{id}")]
+        [Route("delete/{id}")]
         [HttpPost]
         public IActionResult Delete(Planet p)
         {
-            context.Planets.Remove(p);
-            context.SaveChanges();
+            categoryService.Delete(p);
             return RedirectToAction("Index");
+        }
+
+        private void ValidateData(Planet p, IValidator<Planet> validator)
+        {
+            var validationResult = validator.Validate(p);
+
+            if (!validationResult.IsValid)
+            {
+                validationResult.AddToModelState(this.ModelState, "");
+            }
         }
 
     }

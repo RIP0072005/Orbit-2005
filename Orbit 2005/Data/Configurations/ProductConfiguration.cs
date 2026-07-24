@@ -20,6 +20,8 @@ namespace Orbit_2005.Data.Configurations
 
             P.Property(p => p.Amount)
                 .HasDefaultValue(100);
+
+            P.HasIndex(p => p.Name).IsUnique(); // Avoid Duplicated Names
         }
     }
 }

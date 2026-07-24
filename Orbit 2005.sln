@@ -5,6 +5,10 @@ VisualStudioVersion = 17.14.37111.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orbit 2005", "Orbit 2005\Orbit 2005.csproj", "{5C0074D2-AB2D-48EA-944C-903FF75A9026}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "..\..\..\Desktop\Temp\Wazzafny-Shokran-FP\Wazzafny-Shokran-FP\Backend\Backend.csproj", "{181637C3-406D-0D3F-6D40-A312B0EC8661}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiPractice", "WebApiPractice\WebApiPractice.csproj", "{B8629695-EC4C-49BC-ABFF-20C917769649}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{5C0074D2-AB2D-48EA-944C-903FF75A9026}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C0074D2-AB2D-48EA-944C-903FF75A9026}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C0074D2-AB2D-48EA-944C-903FF75A9026}.Release|Any CPU.Build.0 = Release|Any CPU
+		{181637C3-406D-0D3F-6D40-A312B0EC8661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{181637C3-406D-0D3F-6D40-A312B0EC8661}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{181637C3-406D-0D3F-6D40-A312B0EC8661}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{181637C3-406D-0D3F-6D40-A312B0EC8661}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8629695-EC4C-49BC-ABFF-20C917769649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8629695-EC4C-49BC-ABFF-20C917769649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8629695-EC4C-49BC-ABFF-20C917769649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8629695-EC4C-49BC-ABFF-20C917769649}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
