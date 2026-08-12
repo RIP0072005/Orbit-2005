@@ -1,0 +1,91 @@
+﻿@using Orbit_2005.Models
+@model Order
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = $"Update Order #{Model.Id}";
+}
+
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <!-- الهيدر بتاع الصفحة -->
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+                <h2 class="text-light fw-bold m-0">
+                    Update Order <span class="text-warning">#@Model.Id</span>
+                </h2>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    Cancel & Back
+                </a>
+            </div>
+
+            <!-- كارت التعديل -->
+            <div class="card cosmic-card bg-transparent border-secondary shadow-lg p-4" style="border-radius: 10px; background-color: rgba(20, 20, 30, 0.8) !important;">
+                <form asp-controller="Order" asp-action="Update" method="post">
+
+                    <!-- ⚠️ Hidden fields مهمة جداً عشان الداتا دي متعملش Overwrite بـ Null في الداتابيز -->
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="UserId" />
+                    <input type="hidden" asp-for="OrderDate" />
+                    <input type="hidden" asp-for="TotalPrice" />
+
+                    <!-- تعديل حالة الطلب -->
+                    <div class="mb-4 p-3 rounded" style="background-color: rgba(255,255,255,0.05);">
+                        <label asp-for="Status" class="form-label text-warning fw-bold text-uppercase">Order Status</label>
+                        <!-- الـ Tag Helper ده بيحول الـ Enum لقائمة منسدلة أوتوماتيك -->
+                        <select asp-for="Status" asp-items="Html.GetEnumSelectList<OrderStatus>()" class="form-select bg-dark text-light border-warning form-select-lg">
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger small"></span>
+                    </div>
+
+                    <h5 class="text-info text-uppercase mb-3">Shipping Details</h5>
+
+                    <div class="row">
+                        <!-- تعديل العنوان -->
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Address" class="form-label text-light">Delivery Address <span class="text-danger">*</span></label>
+                            <input asp-for="Address" class="form-control bg-dark text-light border-secondary" required />
+                            <span asp-validation-for="Address" class="text-danger small"></span>
+                        </div>
+
+                        <!-- تعديل التليفون -->
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PhoneNumber" class="form-label text-light">Phone Number</label>
+                            <input asp-for="PhoneNumber" class="form-control bg-dark text-light border-secondary" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                        </div>
+
+                        <!-- عرض السعر (مقفول مش بيتعدل) -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-light">Total Price (Locked)</label>
+                            <input type="text" value="$@Model.TotalPrice" class="form-control bg-dark text-success fw-bold border-secondary" disabled />
+                        </div>
+
+                        <!-- تعديل الملاحظات -->
+                        <div class="col-md-12 mb-4">
+                            <label asp-for="Description" class="form-label text-light">Order Notes</label>
+                            <textarea asp-for="Description" class="form-control bg-dark text-light border-secondary" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <hr class="border-secondary mb-4">
+
+                    <!-- زرار الحفظ -->
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success btn-lg fw-bold px-5 text-uppercase" style="letter-spacing: 1px;">
+                            Save Changes 💾
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

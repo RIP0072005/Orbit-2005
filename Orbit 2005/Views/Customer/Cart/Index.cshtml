@@ -1,0 +1,141 @@
+﻿@using Orbit_2005.Models
+@model List<CartItem>
+
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = "Cargo Hold";
+}
+
+<div class="container mt-5 pt-5">
+
+    <!-- عرض رسائل النجاح أو الأخطاء -->
+    @if (TempData["successfulSign"] != null)
+    {
+        <div class="alert alert-success bg-transparent border-success text-success d-flex justify-content-between">
+            <span>🛸 @TempData["successfulSign"]</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger bg-transparent border-danger text-danger d-flex justify-content-between">
+            <span>⚠️ @TempData["error"]</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- هيدر الصفحة -->
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-2">
+        <h2 class="text-light text-uppercase fw-bold m-0"><span class="text-info">Cargo</span> Hold (Cart)</h2>
+        <span class="text-white-50" style="font-family: monospace;">[ ITEMS: @Model.Count ]</span>
+    </div>
+
+    <!-- لو السلة فاضية -->
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="text-center py-5">
+            <div class="mb-4" style="font-size: 5rem; opacity: 0.5;">🛰️</div>
+            <h3 class="text-light">Your cargo hold is empty, Commander.</h3>
+            <p class="text-white-50 mb-4">You haven't added any materials to your cart yet.</p>
+            <a asp-area="Customer" asp-controller="Product" asp-action="Index" class="btn btn-outline-info btn-lg text-uppercase px-5" style="letter-spacing: 2px;">
+                Explore Market
+            </a>
+        </div>
+    }
+    else
+    {
+        <!-- لو السلة فيها منتجات -->
+        <div class="row">
+
+            <!-- قائمة المنتجات (على الشمال) -->
+            <div class="col-lg-8 mb-4">
+                @foreach (var item in Model)
+                {
+                    <div class="card cosmic-card bg-transparent border-secondary mb-3 hover-glow" style="border-radius: 10px; background-color: rgba(20, 20, 30, 0.5) !important;">
+                        <div class="row g-0 align-items-center p-3">
+
+                            <!-- أيقونة / صورة المنتج -->
+                            <div class="col-md-2 text-center">
+                                <div class="bg-dark rounded p-3 border border-secondary" style="font-size: 2rem;">
+                                    ☄️
+                                </div>
+                            </div>
+
+                            <!-- تفاصيل المنتج -->
+                            <div class="col-md-4 ps-3">
+                                <h5 class="text-light fw-bold mb-1">@item.Product.Name</h5>
+                                <div class="text-success fw-bold">$@item.Product.Price <span class="text-white-50 small fw-normal">/ Unit</span></div>
+                            </div>
+
+                            <!-- تعديل الكمية (Form) -->
+                            <div class="col-md-3 text-center">
+                                <form asp-controller="Cart" asp-action="UpdateQuantity" method="post" class="d-flex align-items-center justify-content-center">
+                                    <input type="hidden" name="cartItemId" value="@item.Id" />
+                                    <!-- لو العميل غير الرقم، الفورم هتبعت الطلب أوتوماتيك بسبب onchange -->
+                                    <input type="number" name="quantity" value="@item.Quantity" min="1" max="@item.Product.Amount"
+                                           class="form-control text-center bg-transparent text-light border-info me-2" style="width: 70px;"
+                                           onchange="this.form.submit()" />
+                                </form>
+                            </div>
+
+                            <!-- إجمالي السعر للمنتج الواحد وزرار الحذف -->
+                            <div class="col-md-3 text-end d-flex flex-column align-items-end justify-content-center">
+                                <div class="text-light fw-bold mb-2">Total: <span class="text-info">$@(item.Product.Price* item.Quantity)</span></div>
+
+                                <form asp-controller="Cart" asp-action="RemoveFromCart" method="post">
+                                    <input type="hidden" name="cartItemId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">
+                                        Eject ❌
+                                    </button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- فاتورة الحساب (على اليمين) -->
+            <div class="col-lg-4">
+                <div class="card cosmic-card bg-transparent border-info p-4" style="border-radius: 10px; background-color: rgba(13, 202, 240, 0.05) !important;">
+                    <h4 class="text-info text-uppercase fw-bold mb-4 border-bottom border-secondary pb-2">Mission Log</h4>
+
+                    <div class="d-flex justify-content-between mb-3 text-light">
+                        <span>Items Count:</span>
+                        <span>@Model.Sum(i => i.Quantity) Units</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3 text-light">
+                        <span>Galactic Tax:</span>
+                        <span class="text-white-50">Calculated at Checkout</span>
+                    </div>
+
+                    <hr class="border-secondary mb-3">
+
+                    <div class="d-flex justify-content-between mb-4">
+                        <h5 class="text-light fw-bold m-0">Total Value:</h5>
+                        <h4 class="text-success fw-bold m-0">$@ViewBag.TotalPrice</h4>
+                    </div>
+
+                    <!-- زرار الإنتقال للدفع -->
+                    <a asp-action="Checkout" asp-controller="Order" asp-area="Customer" class="btn btn-info btn-lg w-100 fw-bold text-dark text-uppercase mb-2" style="letter-spacing: 2px;">
+                        Proceed to Checkout
+                    </a>
+
+                    <a asp-area="Customer" asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary w-100 text-uppercase" style="letter-spacing: 1px;">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+<style>
+    .hover-glow:hover {
+        border-color: var(--cosmic-accent, #0dcaf0) !important;
+        box-shadow: 0 0 15px rgba(13, 202, 240, 0.1);
+        transform: translateY(-2px);
+    }
+</style>

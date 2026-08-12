@@ -1,66 +1,76 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Orbit_2005.Data;
 using Orbit_2005.Models;
+using Orbit_2005.Models.ViewModels;
 using Orbit_2005.Repositories.Interfaces;
 
 namespace Orbit_2005.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
-        private readonly AppDbContext context;
-        public ProductRepository(AppDbContext _context)
+        public ProductRepository(AppDbContext _context) : base(_context)
         {
-            context = _context;
         }
-
-        public void Add(Product product)
-        {
-            var Exist = context.Products.Any(p => p.Id == product.Id);
-            if (!Exist)
-                context.Products.Add(product);
-        }
-
-        public void Delete(Product product)
-        {
-            var p = context.Products.FirstOrDefault(p => p.Id == product.Id);
-
-            if (p != null)
-            {
-                context.Products.Remove(p);
-            }            
-        }
-
-        public List<Product> GetAll()
-        {
-            return context.Products.ToList();
-        }
-
-        public Product GetById(int id)
-        {
-            return context.Products.FirstOrDefault(p => p.Id == id);
-        }
-
         public Product GetByIdWithPlanet(int id)
         {
             return context.Products
                 .Include(p => p.Planet)
                 .FirstOrDefault(p => p.Id == id);
         }
-        public bool IsNameExist(Product product)
+
+
+
+        public List<Product> GetTopProducts(int count = 0)
         {
-            return context.Products.Any(p => p.Name == product.Name && p.Id != product.Id);
+            var query = context.Products
+                .Include(p => p.Planet)
+                .OrderByDescending(p => p.TotalSales)
+                .ThenByDescending(p => p.Price);
+
+
+            return count > 0 ? query.Take(count).ToList() : query.ToList();
         }
 
-        public void Save()
+
+        private IQueryable<ProductPlanetViewModel> GetBaseProductQuery()
         {
-            context.SaveChanges();
+            return context.Products
+                .AsNoTracking() // عشان الأداء يكون طلقة
+                .Select(p => new ProductPlanetViewModel
+                {
+                    ProductId = p.Id,
+                    PlanetName = p.Planet.Name,
+                    ProductName = p.Name, // صلحنا الغلطة
+                    Price = p.Price
+                });
         }
 
-        public void Update(Product product)
+        public List<ProductPlanetViewModel> GetProductDetails(int count = 0)
         {
-            var Exist = context.Products.Any(p => p.Id == product.Id);
-            if (Exist)
-                context.Update(product);
+            var query = GetBaseProductQuery();
+            return count > 0 ? query.Take(count).ToList() : query.ToList();
         }
+
+        public List<ProductPlanetViewModel> GetProductPriceSortedASC(int count = 0)
+        {
+            var query = GetBaseProductQuery().OrderBy(p => p.Price);
+
+            return count > 0 ? query.Take(count).ToList() : query.ToList();
+        }
+
+        public List<ProductPlanetViewModel> GetProductPriceSortedDESC(int count = 0)
+        {
+            var query =  GetBaseProductQuery().OrderByDescending(p => p.Price);
+
+            return count > 0 ? query.Take(count).ToList() : query.ToList();
+        }
+
+        public List<ProductPlanetViewModel> GetProductDate(int count = 0)
+        {
+            var query = GetBaseProductQuery().OrderByDescending(p => p.ProductId);
+
+            return count > 0 ? query.Take(count).ToList() : query.ToList();
+        }
+
     }
 }

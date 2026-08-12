@@ -1891,7 +1891,7 @@
   color: rgba(var(--bs-body-color-rgb), var(--bs-text-opacity)) !important;
 }
 
-.text-muted {
+.text-white-50 {
   --bs-text-opacity: 1;
   color: var(--bs-secondary-color) !important;
 }

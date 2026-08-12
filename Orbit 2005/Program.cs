@@ -22,12 +22,19 @@ namespace Orbit_2005
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ProductService, ProductService>();
-            builder.Services.AddScoped<CategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<CategoryService, CategoryService>();
             builder.Services.AddScoped<AdminHomeService, AdminHomeService>();
-            builder.Services.AddScoped<IAdminOrderRepository, AdminOrderMemoryRepository>();
-            builder.Services.AddScoped<IAdminUserRepository, AdminUserMemoryRepository>();
-            builder.Services.AddScoped<AdminUserService, AdminUserService>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<UserService, UserService>();
+            builder.Services.AddScoped<HomeService, HomeService>();
+            builder.Services.AddScoped<UserRepository, UserRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+            builder.Services.AddScoped<CartService, CartService>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<OrderService, OrderService>();
+
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -48,6 +55,10 @@ namespace Orbit_2005
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
+
+            
+
+            app.Run();
             app.Run();
         }
     }

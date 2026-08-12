@@ -21,6 +21,15 @@ namespace Orbit_2005.Data.Configurations
             P.Property(p => p.Amount)
                 .HasDefaultValue(100);
 
+            P.Property(p => p.Rate)
+                .HasDefaultValue(0.0);
+
+            P.Property(p => p.NumOfRates)
+                .HasDefaultValue(0);
+
+            P.Property(p => p.TotalSales)
+                .HasDefaultValue(0);
+
             P.HasIndex(p => p.Name).IsUnique(); // Avoid Duplicated Names
         }
     }

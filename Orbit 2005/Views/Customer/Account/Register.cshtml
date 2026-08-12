@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+@model User
+
+<h1>Welcome in real register </h1>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh; margin-top: 50px;">
+    <div class="card cosmic-card shadow-lg p-5" style="max-width: 500px; width: 100%; border-radius: 15px; background-color: rgba(20, 20, 30, 0.85); border: 1px solid var(--cosmic-accent, #0dcaf0);">
+
+        <div class="text-center mb-4">
+            <!-- لمسة البراندينج اللوجو -->
+            <div class="brand-logo mb-2" style="font-family: monospace; color: var(--cosmic-accent, #0dcaf0); letter-spacing: 2px; font-weight: bold;">
+                [ R2 ]
+            </div>
+            <h2 class="text-light fw-bold text-uppercase">Be a part of our galaxy</h2>
+            <p class="text-white-50">Join the network and start your journey.</p>
+        </div>
+
+        <form asp-controller="Account" asp-action="Register" method="post">
+
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="form-label cosmic-label text-info fw-bold">Username</label>
+                <input asp-for="Name" class="form-control cosmic-input bg-transparent text-light border-info" placeholder="Enter your space name..." />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="form-label cosmic-label text-info fw-bold">Email Address</label>
+                <input asp-for="Email" type="email" class="form-control cosmic-input bg-transparent text-light border-info" placeholder="commander@orbit.com" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Password" class="form-label cosmic-label text-info fw-bold">Password</label>
+                <input asp-for="Password" type="password" class="form-control cosmic-input bg-transparent text-light border-info" placeholder="Create a strong password..." />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="planetId" class="form-label cosmic-label text-info fw-bold">Origin Planet (Category)</label>
+                <select asp-for="planetId" class="form-select cosmic-input bg-transparent text-light border-info" asp-items="ViewBag.planets">
+                    <option value="" disabled selected style="color: black;">-- Select a planet --</option>
+                </select>
+                <span asp-validation-for="planetId" class="text-danger small"></span>
+            </div>
+
+            <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-outline-info btn-cosmic py-2 fw-bold text-uppercase" style="letter-spacing: 2px; transition: 0.3s;">
+                    Register Now
+                </button>
+            </div>
+
+            <div class="text-center mt-4">
+                <small class="text-white-50" style="font-size: 0.75rem;">POWERED BY RIP 2005</small>
+            </div>
+        </form>
+    </div>
+</div>

@@ -5,6 +5,7 @@ using Orbit_2005.Models;
 
 namespace Orbit_2005.Controllers.Admin
 {
+    [Route("admin/order")]
     public class OrderController : Controller
     {
         private readonly AppDbContext context;
@@ -13,14 +14,14 @@ namespace Orbit_2005.Controllers.Admin
             context = new AppDbContext();
         }
 
-        [Route("/admin/order/")]
+        [Route("")]
         public IActionResult Index()
         {
             var orders = context.Orders.Include(o => o.User).ToList();
             return View("~/Views/Admin/Order/Index.cshtml", orders);
         }
 
-        [Route("/admin/order/{id}")]
+        [Route("{id:int}")]
         public IActionResult Details(int id)
         {
             var order = context.Orders.Include(o => o.User).FirstOrDefault(o => o.Id == id);
@@ -31,7 +32,7 @@ namespace Orbit_2005.Controllers.Admin
             return View("~/Views/Admin/Order/Details.cshtml", order);
         }
 
-        [Route("/admin/order/update/{id}")]
+        [Route("update")]
         [HttpGet]
         public IActionResult Update(int id) {
             var order = context.Orders.Include(o => o.User).FirstOrDefault(o => o.Id == id);
@@ -42,7 +43,7 @@ namespace Orbit_2005.Controllers.Admin
             return View("~/Views/Admin/Order/Update.cshtml", order);
         }
 
-        [Route("/admin/order/update/")]
+        [Route("update")]
         [HttpPost]
         public IActionResult Update(Order order)
         {
@@ -55,7 +56,7 @@ namespace Orbit_2005.Controllers.Admin
              return RedirectToAction("Index");
         }
 
-        [Route("/admin/order/delete/{id}")]
+        [Route("delete")]
         [HttpPost]
         public IActionResult Delete(int id)
         {
@@ -68,5 +69,7 @@ namespace Orbit_2005.Controllers.Admin
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        // helper function  
     }
 }

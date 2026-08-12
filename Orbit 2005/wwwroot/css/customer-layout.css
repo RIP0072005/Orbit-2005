@@ -4,7 +4,7 @@
     --cosmic-accent: #00f0ff; /* Neon Cyan for a futuristic vibe */
     --cosmic-accent-hover: #00b3cc;
     --text-primary: #f0f6fc;
-    --text-muted: #8b949e;
+    --text-white-50: #8b949e;
     --nav-glass: rgba(5, 7, 10, 0.85);
 }
 
@@ -42,7 +42,7 @@ body {
     }
 
 .navbar-nav .nav-link {
-    color: var(--text-muted) !important;
+    color: var(--text-white-50) !important;
     font-weight: 500;
     margin: 0 10px;
     position: relative;

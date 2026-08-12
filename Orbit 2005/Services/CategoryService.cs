@@ -1,13 +1,14 @@
 ﻿using Orbit_2005.Models;
 using Orbit_2005.Repositories;
+using Orbit_2005.Repositories.Interfaces;
 
 namespace Orbit_2005.Services
 {
     public class CategoryService
     {
-        private readonly CategoryRepository categoryRepository;
+        private readonly ICategoryRepository categoryRepository;
 
-        public CategoryService(CategoryRepository _categoryRepository)
+        public CategoryService(ICategoryRepository _categoryRepository)
         {
             categoryRepository = _categoryRepository;
         }
@@ -37,6 +38,11 @@ namespace Orbit_2005.Services
         {
             categoryRepository.Delete(planet);
             categoryRepository.Save();
+        }
+
+        public List<Planet> GetPlanetsWithProducts()
+        {
+            return categoryRepository.GetPlanetsWithTheirProducts();
         }
 
     }

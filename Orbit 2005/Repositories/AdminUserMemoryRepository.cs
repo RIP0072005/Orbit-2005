@@ -3,7 +3,7 @@ using Orbit_2005.Repositories.Interfaces;
 
 namespace Orbit_2005.Repositories
 {
-    public class AdminUserMemoryRepository : IAdminUserRepository
+    public class AdminUserMemoryRepository : IGenericRepository<User>
     {
         private List<User> users;
 
@@ -36,6 +36,14 @@ namespace Orbit_2005.Repositories
         {
         }
 
+        public void Add(User entity)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Update(User entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

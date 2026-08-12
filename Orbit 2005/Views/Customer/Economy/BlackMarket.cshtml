@@ -1,0 +1,152 @@
+﻿@using Orbit_2005.Models
+@model User
+
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = "Galactic Trade Hub";
+}
+
+@if (TempData["successfulSign"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-success border-success bg-transparent text-success d-flex justify-content-between align-items-center shadow-sm" role="alert">
+            <span>📈 @TempData["successfulSign"]</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+
+@if (TempData["error"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-danger border-danger bg-transparent text-danger d-flex justify-content-between align-items-center shadow-sm" role="alert">
+            <span>⚠️ @TempData["error"]</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+
+<div class="container mt-5 pt-4">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h1 class="text-light text-uppercase fw-bold" style="letter-spacing: 3px;">
+            <i class="bi bi-currency-exchange text-info"></i> Galactic Trade Hub
+        </h1>
+        <p class="text-white-50">Choose your path: Safe and legal, or high risk and high reward.</p>
+    </div>
+
+    <div class="row">
+        <!-- الجزء الشمال: المخزون الحالي (نفس القديم) -->
+        <div class="col-lg-4 mb-4">
+            <div class="card cosmic-card bg-transparent border-secondary shadow-lg h-100" style="border-radius: 12px; background-color: rgba(20, 20, 30, 0.8) !important;">
+                <div class="card-header border-secondary bg-transparent py-3">
+                    <h5 class="text-info m-0 text-uppercase fw-bold">Your Inventory</h5>
+                </div>
+                <div class="card-body">
+                    <!-- الفلوس -->
+                    <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded" style="background-color: rgba(255,255,255,0.05);">
+                        <span class="text-light fw-bold">Galactic Credits</span>
+                        <span class="text-success fs-4 fw-bold">$@Model.GalacticCredits</span>
+                    </div>
+
+                    <h6 class="text-white-50 text-uppercase mb-3">Raw Resources</h6>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-dark rounded border border-secondary">
+                        <span class="text-light fw-bold">☄️ Titanium</span>
+                        <span class="badge bg-secondary rounded-pill fs-6" id="qty-Titanium">@Model.Titanium</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-dark rounded border border-secondary">
+                        <span class="text-info fw-bold">⚡ Plasma Cores</span>
+                        <span class="badge bg-info text-dark rounded-pill fs-6" id="qty-PlasmaCores">@Model.PlasmaCores</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-dark rounded border border-secondary">
+                        <span class="text-warning fw-bold" style="text-shadow: 0 0 5px orange;">🌌 Dark Matter</span>
+                        <span class="badge bg-warning text-dark rounded-pill fs-6" id="qty-DarkMatter">@Model.DarkMatter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الجزء اليمين: خيارات البيع -->
+        <div class="col-lg-8">
+
+            <!-- الكارت الأول: البنك المركزي (أمان 100%) -->
+            <div class="card cosmic-card bg-transparent border-info shadow-lg mb-4" style="border-radius: 12px; background-color: rgba(13, 202, 240, 0.05) !important;">
+                <div class="card-body p-4">
+                    <h4 class="text-info text-uppercase mb-3 fw-bold">
+                        <i class="bi bi-bank"></i> Central Bank (100% Safe)
+                    </h4>
+
+                    <form asp-area="Customer" asp-controller="Economy" asp-action="SellToBank" method="post" class="row align-items-end">
+                        <div class="col-md-5 mb-3 mb-md-0">
+                            <label class="form-label text-light small">Select Resource</label>
+                            <select name="resourceType" id="bankResource" class="form-select bg-dark text-light border-info" onchange="updateBankMax()">
+                                <option value="Titanium">Titanium ($5 / unit)</option>
+                                <option value="PlasmaCores">Plasma Cores ($25 / unit)</option>
+                                <option value="DarkMatter">Dark Matter ($100 / unit)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3 mb-md-0">
+                            <label class="form-label text-light small">Amount</label>
+                            <input type="number" name="amountToSell" id="bankAmount" class="form-control bg-dark text-light border-info" min="1" value="1" required />
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-info w-100 fw-bold text-dark text-uppercase">Sell Safely</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- الكارت التاني: السوق السوداء (مخاطرة) -->
+            <div class="card cosmic-card bg-transparent border-danger shadow-lg" style="border-radius: 12px; background-color: rgba(220, 53, 69, 0.05) !important;">
+                <div class="card-body p-4">
+                    <h4 class="text-danger text-uppercase mb-3 fw-bold">
+                        <i class="bi bi-incognito"></i> Smuggler's Run (High Risk)
+                    </h4>
+                    <p class="text-white-50 small mb-4">65% chance of success (Earn 3x the value). 35% chance to get busted and lose it all.</p>
+
+                    <form asp-area="Customer" asp-controller="Economy" asp-action="Smuggle" method="post" class="row align-items-end">
+                        <div class="col-md-5 mb-3 mb-md-0">
+                            <label class="form-label text-light small">Select Resource</label>
+                            <select name="resourceType" id="smuggleResource" class="form-select bg-dark text-light border-danger" onchange="updateSmuggleMax()">
+                                <option value="Titanium">Titanium (Win: $15)</option>
+                                <option value="PlasmaCores">Plasma Cores (Win: $75)</option>
+                                <option value="DarkMatter">Dark Matter (Win: $300)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3 mb-md-0">
+                            <label class="form-label text-light small">Amount</label>
+                            <input type="number" name="amountToSmuggle" id="smuggleAmount" class="form-control bg-dark text-light border-danger" min="1" value="1" required />
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-outline-danger w-100 fw-bold text-uppercase">Smuggle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- سكريبت ضبط الحد الأقصى للكميات -->
+<script>
+    function updateMaxInput(selectId, inputId) {
+        const select = document.getElementById(selectId);
+        const input = document.getElementById(inputId);
+
+        const qty = parseInt(document.getElementById('qty-' + select.value).innerText);
+
+        input.max = qty;
+        if(input.value > qty) input.value = qty;
+        if(qty === 0) input.value = 0;
+    }
+
+    function updateBankMax() { updateMaxInput('bankResource', 'bankAmount'); }
+    function updateSmuggleMax() { updateMaxInput('smuggleResource', 'smuggleAmount'); }
+
+    window.onload = function() {
+        updateBankMax();
+        updateSmuggleMax();
+    };
+</script>

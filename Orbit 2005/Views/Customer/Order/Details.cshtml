@@ -1,0 +1,111 @@
+﻿@using Orbit_2005.Models
+@model Order
+
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = $"Mission #{Model?.Id} Details";
+}
+
+<div class="container mt-5 pt-5">
+
+    <!-- زرار الرجوع -->
+    <div class="mb-4">
+        <a asp-action="History" class="btn btn-outline-secondary btn-sm text-uppercase" style="letter-spacing: 1px;">
+            🔙 Back to Logs
+        </a>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-danger bg-transparent border-danger text-danger text-center">
+            Mission data corrupted or not found!
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <!-- الجزء اليمين: تفاصيل الفاتورة والشحن -->
+            <div class="col-lg-4 mb-4">
+                <div class="card cosmic-card bg-transparent border-info p-4 h-100" style="border-radius: 10px; background-color: rgba(13, 202, 240, 0.05) !important;">
+                    <h4 class="text-info text-uppercase fw-bold mb-4 border-bottom border-secondary pb-2">Mission Briefing</h4>
+
+                    <div class="mb-3">
+                        <small class="text-white-50 text-uppercase d-block mb-1">Mission ID</small>
+                        <span class="text-light fs-5 fw-bold">#@Model.Id</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-white-50 text-uppercase d-block mb-1">Timestamp</small>
+                        <span class="text-light">@Model.OrderDate.ToString("dd MMM yyyy - HH:mm UTC")</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-white-50 text-uppercase d-block mb-1">Destination Coordinates</small>
+                        <span class="text-light">@Model.Address</span>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                    {
+                        <div class="mb-3">
+                            <small class="text-white-50 text-uppercase d-block mb-1">Comms Link</small>
+                            <span class="text-light">@Model.PhoneNumber</span>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <div class="mb-3">
+                            <small class="text-white-50 text-uppercase d-block mb-1">Notes</small>
+                            <span class="text-light">@Model.Description</span>
+                        </div>
+                    }
+
+                    <hr class="border-secondary my-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-light fw-bold text-uppercase">Total Cost:</span>
+                        <span class="text-success fs-3 fw-bold">$@Model.TotalPrice</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الجزء الشمال: المنتجات (Cargo) -->
+            <div class="col-lg-8">
+                <h4 class="text-light text-uppercase fw-bold mb-3">Recovered <span class="text-info">Cargo</span></h4>
+
+                @if (Model.OrderItems != null && Model.OrderItems.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover table-borderless" style="background-color: rgba(20, 20, 30, 0.5); border-radius: 10px; overflow: hidden;">
+                            <thead class="border-bottom border-secondary text-info text-uppercase" style="letter-spacing: 1px;">
+                                <tr>
+                                    <th class="py-3 px-4">Item Name</th>
+                                    <th class="py-3 text-center">Unit Price</th>
+                                    <th class="py-3 text-center">Quantity</th>
+                                    <th class="py-3 text-end px-4">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OrderItems)
+                                {
+                                    <tr class="align-middle">
+                                        <td class="py-3 px-4">
+                                            <span class="text-light fw-bold">@(item.Product?.Name ?? "Unknown Artifact")</span>
+                                        </td>
+                                        <td class="py-3 text-center text-white-50">$@item.Price</td>
+                                        <td class="py-3 text-center text-light">x @item.Quantity</td>
+                                        <td class="py-3 text-end px-4 text-success fw-bold">$@(item.Price* item.Quantity)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-white-50">No items found in this order record.</p>
+                }
+            </div>
+        </div>
+    }
+</div>

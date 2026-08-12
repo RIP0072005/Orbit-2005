@@ -104,9 +104,6 @@ namespace Orbit_2005.Controllers.Admin
         [Route("delete/{id}")]
         public IActionResult Delete(int id)
         {
-            if (id == 0)
-                return BadRequest();
-
             var p = productService.GetById(id);
             if (p == null)
             {

@@ -1,0 +1,149 @@
+﻿@using Orbit_2005.Models
+@model Product
+
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = Model.Name;
+}
+
+@if (TempData["successfulSign"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-success border-success bg-transparent text-success d-flex justify-content-between align-items-center shadow-sm" role="alert">
+            <span>📈 @TempData["successfulSign"]</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+
+@if (TempData["error"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-danger border-danger bg-transparent text-danger d-flex justify-content-between align-items-center shadow-sm" role="alert">
+            <span>⚠️ @TempData["error"]</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+
+<div class="container mt-5 pt-5">
+
+    <!-- مسار التنقل (Breadcrumb) عشان العميل ميتوهش -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-transparent p-0">
+            <li class="breadcrumb-item"><a asp-area="Customer" asp-controller="Home" asp-action="Index" class="text-info text-decoration-none">Home Base</a></li>
+            <li class="breadcrumb-item"><a asp-area="Customer" asp-controller="Product" asp-action="Index" class="text-info text-decoration-none">Galactic Shop</a></li>
+            <li class="breadcrumb-item active text-light" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <!-- الكارت الأساسي لتفاصيل المنتج -->
+    <div class="card cosmic-card shadow-lg bg-transparent border-info mb-5" style="border-radius: 15px; background-color: rgba(20, 20, 30, 0.85) !important; overflow: hidden;">
+        <div class="row g-0">
+
+            <!-- 1. قسم الصورة (على الشمال) -->
+            <div class="col-md-5 bg-dark d-flex align-items-center justify-content-center" style="min-height: 400px; border-right: 1px solid #444;">
+                <!-- لو عندك مسار للصورة في الداتابيز حطه في الـ src بدل الإيموجي -->
+                <div class="text-center">
+                    <span style="font-size: 8rem; filter: drop-shadow(0 0 20px rgba(13, 202, 240, 0.5));">🪐</span>
+                    <div class="text-white-50 mt-3" style="font-family: monospace;">[ ITEM_IMG_SECURED ]</div>
+                </div>
+            </div>
+
+            <!-- 2. قسم التفاصيل (على اليمين) -->
+            <div class="col-md-7">
+                <div class="card-body p-5">
+
+                    <!-- اسم الكوكب -->
+                    <div class="mb-2">
+                        <span class="badge bg-dark border border-info text-info px-3 py-2 text-uppercase" style="letter-spacing: 1px;">
+                            Origin: @(Model.Planet?.Name ?? "Unknown Sector")
+                        </span>
+                    </div>
+
+                    <!-- اسم المنتج -->
+                    <h1 class="display-5 text-light fw-bold mb-3">@Model.Name</h1>
+
+                    <!-- السعر -->
+                    <h2 class="text-success fw-bold mb-4">
+                        $@Model.Price
+                        <span class="text-white-50 fs-6 fw-normal ms-2">/ Unit</span>
+                    </h2>
+
+                    <hr class="border-secondary mb-4">
+
+                    <!-- الوصف -->
+                    <h5 class="text-info text-uppercase fw-bold mb-2">Item Classification</h5>
+                    <p class="text-light mb-4" style="line-height: 1.8;">
+                        @Model.Description
+                    </p>
+
+                    <!-- حالة المخزون (لوجيك ذكي) -->
+                    <div class="mb-4 p-3 rounded" style="background-color: rgba(255,255,255,0.05); border-left: 4px solid @(Model.Amount > 0 ? "#198754" : "#dc3545");">
+                        <h6 class="text-white-50 text-uppercase mb-1" style="font-size: 0.8rem;">System Inventory Status</h6>
+                        @if (Model.Amount > 10)
+                        {
+                            <span class="text-success fw-bold">✓ In Stock & Ready for Transport</span>
+                        }
+                        else if (Model.Amount > 0 && Model.Amount <= 10)
+                        {
+                            <span class="text-warning fw-bold">⚠️ Low Stock (Only @Model.Amount units left)</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger fw-bold">❌ Out of Stock (Depleted)</span>
+                        }
+                    </div>
+
+                    <!-- فورم إضافة المنتج للسلة -->
+                    <form asp-area="Customer" asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <!-- بنبعت رقم المنتج في الخفاء للكنترولر -->
+                        <input type="hidden" name="productId" value="@Model.Id" />
+
+                        <div class="row align-items-center">
+                            @if (Model.Amount > 0)
+                            {
+                                <!-- تحديد الكمية -->
+                                <div class="col-auto">
+                                    <label class="text-info small text-uppercase fw-bold mb-1">Quantity</label>
+                                    <input type="number" name="quantity" class="form-control bg-transparent text-light border-info text-center" value="1" min="1" max="@Model.Amount" style="width: 80px;" />
+                                </div>
+
+                                <!-- زرار الشراء -->
+                                <div class="col">
+                                    <button type="submit" class="btn btn-info btn-lg w-100 fw-bold text-dark text-uppercase mt-4" style="letter-spacing: 2px;">
+                                        Add to Cargo 🛒
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <!-- لو خلصان، بنقفل الزرار -->
+                                <div class="col">
+                                    <button type="button" class="btn btn-outline-danger btn-lg w-100 fw-bold text-uppercase disabled mt-4" style="letter-spacing: 2px;">
+                                        Unavailable for Trade
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.HasLoot != null && (bool)ViewBag.HasLoot == true)
+{
+    <!-- صندوق الموارد العائم -->
+    <div id="lootBox" class="position-fixed bottom-0 end-0 m-4 p-4 bg-dark border border-info shadow-lg text-center" style="z-index: 1000; border-radius: 15px; box-shadow: 0 0 20px rgba(13, 202, 240, 0.3) !important;">
+        <div class="display-6 mb-2">📦</div>
+        <h5 class="text-info fw-bold text-uppercase">Hidden Stash!</h5>
+        <p class="text-light small mb-3">Scan complete. Resources found.</p>
+
+        <form asp-area="Customer" asp-controller="Economy" asp-action="ClaimLoot" method="post">
+            <button type="submit" class="btn btn-info btn-sm fw-bold w-100 text-dark">CLAIM LOOT</button>
+        </form>
+    </div>
+}

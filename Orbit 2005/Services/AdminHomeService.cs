@@ -9,8 +9,8 @@ namespace Orbit_2005.Services
     {
         private readonly AppDbContext context;
         private readonly IProductRepository productRepository;
-        private readonly IAdminOrderRepository orderRepo;
-        public AdminHomeService(AppDbContext _context, IProductRepository _productRepository, IAdminOrderRepository _orderRepo) 
+        private readonly IOrderRepository orderRepo;
+        public AdminHomeService(AppDbContext _context, IProductRepository _productRepository, IOrderRepository _orderRepo) 
         {
             context = _context;
             productRepository = _productRepository;
@@ -23,8 +23,7 @@ namespace Orbit_2005.Services
             stats.TotalProducts = context.Products.Count();
             stats.TotalPlanets = context.Planets.Count();
             stats.TotalOrders = context.Orders.Count();
-            stats.TotalRevenues = context.Orders.Sum(o => o.Costing);
-
+            stats.TotalRevenues = context.Orders.Sum(o => o.TotalPrice);
             return stats;
         }
 

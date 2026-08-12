@@ -21,5 +21,15 @@
             <a asp-controller="Category" asp-action="create">Add Planet</a>
         </div>
     </div>
+
+    <div class="menu-item">
+        <a href="javascript:void(0)" class="dropdown-toggle">
+            Users
+        </a>
+        <div class="sub-menu">
+            <a asp-controller="User" asp-action="index">Display Users</a>
+            <a asp-controller="User" asp-action="create">Add New Admin</a>
+        </div>
+    </div>
     <a asp-controller="Order" asp-action="Index">Galactic Orders</a>
 </nav>

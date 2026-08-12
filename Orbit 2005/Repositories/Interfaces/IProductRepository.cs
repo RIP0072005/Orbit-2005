@@ -1,23 +1,15 @@
 ﻿using Orbit_2005.Models;
+using Orbit_2005.Models.ViewModels;
 
 namespace Orbit_2005.Repositories.Interfaces
 {
-    public interface IProductRepository 
+    public interface IProductRepository : IGenericRepository<Product>
     {
-        List<Product> GetAll();
-
-        Product GetById(int id);
         Product GetByIdWithPlanet(int id);
-
-        void Add(Product product);
-
-        void Update(Product product);
-
-        void Delete(Product product);
-        bool IsNameExist(Product product);
-
-        void Save();
-
-
+        List<Product> GetTopProducts(int count);
+        List<ProductPlanetViewModel> GetProductDetails(int count);
+        List<ProductPlanetViewModel> GetProductPriceSortedASC(int count);
+        List<ProductPlanetViewModel> GetProductPriceSortedDESC(int count);
+        List<ProductPlanetViewModel> GetProductDate(int count);
     }
 }

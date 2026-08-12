@@ -1,0 +1,60 @@
+﻿@using Orbit_2005.Models
+@model User
+
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = "Commander Profile";
+}
+
+<div class="container d-flex justify-content-center align-items-center mb-5" style="min-height: 80vh; margin-top: 50px;">
+
+    <div class="card cosmic-card shadow-lg" style="max-width: 600px; width: 100%; border-radius: 15px; background-color: rgba(20, 20, 30, 0.85); border: 1px solid var(--cosmic-accent, #0dcaf0); overflow: hidden;">
+
+        <!-- هيدر الكارت -->
+        <div class="card-header border-bottom border-info p-4 text-center" style="background: rgba(13, 202, 240, 0.1);">
+            <div class="mb-3">
+                <!-- أيقونة بروفايل بسيطة -->
+                <span class="d-inline-block bg-dark border border-info rounded-circle d-flex justify-content-center align-items-center mx-auto" style="width: 80px; height: 80px; font-size: 2rem;">
+                    🧑‍🚀
+                </span>
+            </div>
+            <h2 class="text-light fw-bold text-uppercase mb-0" style="letter-spacing: 2px;">@Model.Name</h2>
+            <span class="badge bg-info text-dark mt-2 px-3 py-1">@Model.Role</span>
+        </div>
+
+        <!-- جسم الكارت (البيانات) -->
+        <div class="card-body p-5 text-light">
+            <h5 class="text-info text-uppercase fw-bold mb-4 border-bottom border-secondary pb-2">Identity Records</h5>
+
+            <div class="row mb-3">
+                <div class="col-sm-4 text-white-50 fw-bold">Commander ID:</div>
+                <div class="col-sm-8" style="font-family: monospace;">#@Model.Id</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-4 text-white-50 fw-bold">Email Comm:</div>
+                <div class="col-sm-8">@Model.Email</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-4 text-white-50 fw-bold">Origin Planet:</div>
+                <div class="col-sm-8">
+                    <!-- لو رابط الكوكب باليوزر هيطبع اسمه، لو مفيش هيطبع رقمه -->
+                    @(Model.Planet?.Name ?? $"Planet Sector {Model.planetId}")
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-4 text-white-50 fw-bold">System Status:</div>
+                <div class="col-sm-8 text-success fw-bold">Active & Verified</div>
+            </div>
+        </div>
+
+        <!-- فوتر الكارت (الزراير) -->
+        <div class="card-footer bg-transparent border-top border-secondary p-4 d-flex justify-content-between">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Return to Base</a>
+            <!-- زرار تعديل البيانات (لو حبيت تبرمجه بعدين) -->
+            <button class="btn btn-info text-dark fw-bold disabled">Edit Profile</button>
+        </div>
+    </div>
+</div>

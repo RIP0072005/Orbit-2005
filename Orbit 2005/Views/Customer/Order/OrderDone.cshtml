@@ -1,0 +1,45 @@
+﻿@using Orbit_2005.Models
+@model Order
+
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = "Mission Successful";
+}
+
+<div class="container mt-5 pt-5 text-center">
+
+    @if (TempData["successfulSign"] != null)
+    {
+        <div class="alert alert-success bg-transparent border-success text-success d-inline-block px-5 py-3 mb-5 rounded-pill shadow">
+            <h5 class="m-0">✨ @TempData["successfulSign"]</h5>
+        </div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card cosmic-card bg-transparent border-info shadow-lg p-5" style="border-radius: 15px; background-color: rgba(13, 202, 240, 0.05) !important;">
+
+                <div class="display-1 mb-4" style="filter: drop-shadow(0 0 20px rgba(25, 135, 84, 0.5));">🌍</div>
+                <h2 class="text-light fw-bold text-uppercase mb-3">Cargo Dispatched</h2>
+                <p class="text-white-50 mb-4 fs-5">
+                    Your order has been transmitted successfully. Our fleet is preparing your items for delivery.
+                </p>
+
+                <div class="bg-dark rounded p-3 mb-4 border border-secondary text-start">
+                    <div class="text-light mb-2"><span class="text-info fw-bold">Date:</span> @Model.OrderDate.ToString("MMM dd, yyyy - HH:mm UTC")</div>
+                    <div class="text-light mb-2"><span class="text-info fw-bold">Coordinates:</span> @Model.Address</div>
+                    <div class="text-light"><span class="text-success fw-bold">Final Value:</span> $@Model.TotalPrice</div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <a asp-controller="Order" asp-action="History" class="btn btn-info fw-bold text-dark text-uppercase" style="letter-spacing: 1px;">
+                        View Mission History
+                    </a>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary text-uppercase" style="letter-spacing: 1px;">
+                        Return to Base
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

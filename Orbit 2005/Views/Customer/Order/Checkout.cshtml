@@ -1,0 +1,62 @@
+﻿@using Orbit_2005.Models
+@model Order
+
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = "Mission Checkout";
+}
+
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-info pb-2">
+                <h2 class="text-light text-uppercase fw-bold m-0"><span class="text-info">Launch</span> Preparation</h2>
+                <h4 class="text-success m-0">Total: $@ViewBag.totalCost</h4>
+            </div>
+
+            <div class="card cosmic-card bg-transparent border-secondary shadow-lg p-4" style="border-radius: 15px; background-color: rgba(20, 20, 30, 0.8) !important;">
+                <h5 class="text-info text-uppercase mb-4">Transmission Coordinates (Shipping Details)</h5>
+
+                <form asp-area="Customer" asp-controller="Order" asp-action="Checkout" method="post">
+
+                    <!-- حقل العنوان -->
+                    <div class="mb-4">
+                        <label asp-for="Address" class="form-label text-light fw-bold">Galactic Address <span class="text-danger">*</span></label>
+                        <input asp-for="Address" class="form-control bg-dark text-light border-secondary" placeholder="Sector, Planet, Base Name..." required />
+                        <span asp-validation-for="Address" class="text-danger small"></span>
+                    </div>
+
+                    <!-- حقل رقم التليفون -->
+                    <div class="mb-4">
+                        <label asp-for="PhoneNumber" class="form-label text-light fw-bold">Comms Link (Phone Number)</label>
+                        <input asp-for="PhoneNumber" class="form-control bg-dark text-light border-secondary" placeholder="+1 (999) 000-0000" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                    </div>
+
+                    <!-- حقل الملاحظات -->
+                    <div class="mb-4">
+                        <label asp-for="Description" class="form-label text-light fw-bold">Mission Notes (Optional)</label>
+                        <textarea asp-for="Description" class="form-control bg-dark text-light border-secondary" rows="3" placeholder="Any special delivery instructions?"></textarea>
+                    </div>
+
+                    <hr class="border-secondary mb-4">
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-secondary text-uppercase" style="letter-spacing: 1px;">
+                            Abort & Return to Cargo
+                        </a>
+                        <button type="submit" class="btn btn-info fw-bold text-dark text-uppercase px-5" style="letter-spacing: 2px;">
+                            Confirm Launch 🚀
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

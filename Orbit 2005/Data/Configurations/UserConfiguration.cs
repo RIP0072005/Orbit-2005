@@ -24,9 +24,13 @@ namespace Orbit_2005.Data.Configurations
              U.Property(u => u.Email)
                 .HasMaxLength(30);
 
+            U.HasIndex(u => u.Email);
+            U.Property(u => u.GalacticCredits)
+                .HasDefaultValue(0.0);
+
             U.HasOne(u => u.Planet)
                 .WithMany(p => p.Users)
-                .HasForeignKey(u => u.PlanetId)
+                .HasForeignKey(u => u.planetId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             U.HasMany(u => u.Orders)

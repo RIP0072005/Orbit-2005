@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@section Styles {
+    <link href="~/css/admin-products.css" rel="stylesheet" />
+}
+@model User
+@section Breadcrumb {
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-transparent p-0 border-bottom border-secondary pb-2">
+            <li class="breadcrumb-item">
+                <a asp-controller="Admin" asp-action="Index" class="text-decoration-none" style="color: var(--cosmic-accent);">Orbit 2005</a>
+            </li>
+            <li class="breadcrumb-item active text-light" aria-current="page">Current Page Name</li>
+        </ol>
+    </nav>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="cosmic-page-title">Update Product</h2>
+    <a asp-controller="User" asp-action="Index" class="btn btn-outline-secondary">Back to Inventory</a>
+</div>
+
+<div class="card cosmic-card mx-auto" style="max-width: 800px;">
+    <div class="card-header border-bottom border-secondary pb-3 pt-3 bg-transparent">
+        <h5 class="mb-0 text-warning"><i class="bi bi-pencil-square"></i> Username: #@Model.Name</h5>
+    </div>
+
+    <div class="card-body p-4">
+        <form asp-controller="User" asp-action="Update" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label cosmic-label">Username</label>
+                <input asp-for="Name" class="form-control cosmic-input">
+                <span class="text-white-50" asp-validation-for="Name"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label cosmic-label">Email</label>
+                <input asp-for="Email" class="form-control cosmic-input">
+                <span class="text-white-50" asp-validation-for="Email"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label cosmic-label"> New Password</label>
+                <input asp-for="Password" class="form-control cosmic-input">
+                <span class="text-white-50" asp-validation-for="Password"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="planetId" class="form-label cosmic-label">Origin Planet</label>
+                <select asp-for="planetId" class="form-select cosmic-input" asp-items="ViewBag.planets">
+                </select>
+            </div>
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-warning px-5 py-2 fw-bold text-dark">Update Info </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -1,0 +1,93 @@
+﻿@using Orbit_2005.Models
+@model IEnumerable<Order>
+
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = "Mission Logs";
+}
+
+<div class="container mt-5 pt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-2">
+        <h2 class="text-light text-uppercase fw-bold m-0"><span class="text-info">Mission</span> Logs (History)</h2>
+        <span class="text-white-50" style="font-family: monospace;">[ ARCHIVE ]</span>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center py-5">
+            <div class="mb-4" style="font-size: 5rem; opacity: 0.5;">📜</div>
+            <h3 class="text-light">No past missions found.</h3>
+            <p class="text-white-50 mb-4">You haven't ordered any galactic materials yet.</p>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-outline-info text-uppercase" style="letter-spacing: 1px;">
+                Explore Market
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var order in Model.OrderByDescending(o => o.OrderDate))
+            {
+                <div class="col-12 mb-3">
+                    <div class="card cosmic-card bg-transparent border-secondary hover-glow" style="border-radius: 10px; background-color: rgba(20, 20, 30, 0.5) !important;">
+                        <div class="card-body d-flex justify-content-between align-items-center p-4">
+
+                            <!-- رقم الفاتورة والتاريخ -->
+                            <div>
+                                <h5 class="text-light fw-bold mb-1">
+                                    Mission <span class="text-info">#@order.Id</span>
+                                </h5>
+                                <div class="text-white-50 small">
+                                    📅 @order.OrderDate.ToString("dd MMM yyyy, HH:mm")
+                                </div>
+                            </div>
+
+                            <!-- حالة الطلب (لوجيك لتغيير اللون حسب الحالة) -->
+                            <div>
+                                @switch (order.Status)
+                                {
+                                    case OrderStatus.pending:
+                                        <span class="badge bg-warning text-dark px-3 py-2 text-uppercase rounded-pill">⌛ Pending</span>
+                                        break;
+                                    case OrderStatus.shiped:
+                                        <span class="badge bg-info text-dark px-3 py-2 text-uppercase rounded-pill">🚀 Shipped</span>
+                                        break;
+                                    case OrderStatus.delivered:
+                                        <span class="badge bg-success px-3 py-2 text-uppercase rounded-pill">✅ Delivered</span>
+                                        break;
+                                    case OrderStatus.canceled:
+                                        <span class="badge bg-danger px-3 py-2 text-uppercase rounded-pill">❌ Canceled</span>
+                                        break;
+                                }
+                            </div>
+
+                            <!-- الإجمالي -->
+                            <div class="text-end">
+                                <div class="text-white-50 small text-uppercase">Total Value</div>
+                                <div class="text-success fw-bold fs-5">$@order.TotalPrice</div>
+                            </div>
+
+                            <!-- زرار التفاصيل -->
+                            <div>
+                                <a asp-controller="Order" asp-action="OrderDetails" asp-route-id="@order.Id" class="btn btn-outline-info btn-sm text-uppercase" style="letter-spacing: 1px;">
+                                    View Details
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .hover-glow:hover {
+        border-color: var(--cosmic-accent, #0dcaf0) !important;
+        box-shadow: 0 0 15px rgba(13, 202, 240, 0.1);
+        transform: translateX(5px);
+        transition: all 0.3s ease;
+    }
+</style>

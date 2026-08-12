@@ -1,10 +1,102 @@
 ﻿@{
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
-<div class="container">
-    <div id="customer-page-content" class="py-5 mt-5 text-center">
-        <h1 class="display-4 fw-bold cosmic-title mt-5">Welcome to Orbit 2005</h1>
-        <p class="lead text-muted">Your ultimate gateway to import and export rare space materials.</p>
-        <a href="shop.html" class="btn btn-cosmic btn-lg mt-3">Start Exploring</a>
+
+@if (TempData["successfulSign"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-success border-success bg-transparent text-success d-flex justify-content-between align-items-center shadow-sm" role="alert">
+            <span>🚀 @TempData["successfulSign"]</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+
+@if (TempData["error"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-danger border-danger bg-transparent text-danger d-flex justify-content-between align-items-center shadow-sm" role="alert">
+            <span>⚠️ @TempData["error"]</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+
+<!-- 1. Hero Section -->
+<div class="container-fluid py-5 mb-5" style="background: radial-gradient(circle at center, rgba(13, 202, 240, 0.1) 0%, transparent 70%);">
+    <div class="container text-center py-5">
+        <div class="brand-logo mb-3" style="font-family: monospace; color: var(--cosmic-accent, #0dcaf0); letter-spacing: 3px; font-weight: bold; font-size: 1.2rem;">
+            [ R2 NETWORK ]
+        </div>
+        <h1 class="display-3 fw-bold text-light text-uppercase mb-3" style="letter-spacing: 2px;">
+            Welcome to <span class="text-info">Orbit 2005</span>
+        </h1>
+        <p class="lead text-white-50 mx-auto mb-5" style="max-width: 600px;">
+             Your ultimate gateway to import and export rare space materials, advanced planetary gear, and intergalactic artifacts.
+        </p>
+        <a asp-area="Customer" asp-controller="Product" asp-action="Index" class="btn btn-outline-info btn-lg px-5 py-3 fw-bold text-uppercase" style="letter-spacing: 2px; border-radius: 30px;">
+            Start Exploring
+        </a>
     </div>
 </div>
+
+<div class="container">
+
+    <!-- 2. Featured Space Materials (المنتجات المميزة) -->
+    <div class="d-flex justify-content-between align-items-end mb-4 border-bottom border-secondary pb-2">
+        <h3 class="text-light text-uppercase fw-bold m-0">Featured Materials</h3>
+        <a asp-area="Customer" asp-controller="Product" asp-action="Index" class="text-info text-decoration-none small text-uppercase">View All Inventory &#8594;</a>
+    </div>
+
+    <div class="row mb-5">
+
+
+        @foreach (var item in ViewBag.TopProducts)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card cosmic-card h-100 bg-transparent border-secondary hover-glow" style="transition: 0.3s;">
+                    <!-- صورة وهمية للمنتج -->
+                    <div class="card-img-top bg-dark d-flex align-items-center justify-content-center" style="height: 200px; border-bottom: 1px solid #444;">
+                        <span class="text-white-50 fs-1">☄️</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="badge bg-dark text-info mb-2 border border-info">@(@item.Planet?.Name ?? "No Planet") </span>
+                        <h5 class="card-title text-light">@item.Name</h5>
+                        <p class="card-text text-white-50 small">@item.Description</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center pb-3">
+                        <span class="text-success fw-bold fs-5">$@item.Price</span>
+                        <button class="btn btn-sm btn-info text-dark fw-bold"><a asp-area="Customer" asp-controller="Prduct" asp-action="Details" asp-route-id="@item.Id">Add to Cart</a></button>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <!-- 3. Explore By Planet (الأقسام / الكواكب) -->
+    <div class="text-center mb-4">
+        <h3 class="text-light text-uppercase fw-bold">Trade Routes</h3>
+        <p class="text-white-50">Discover materials based on their origin planet.</p>
+    </div>
+    <div class="row mb-5 text-center">
+
+    @foreach (var item in ViewBag.CategoryProducts)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="p-4 border border-secondary rounded hover-glow" style="background-color: rgba(20,20,30,0.5);">
+                <h4 class="text-info">@item.CategoryName</h4>
+                <a href="#" class="text-white-50 text-decoration-none small">Explore @item.ProductCount Items</a>
+            </div>
+        </div>        
+    }
+    </div>
+</div>
+
+<style>
+    .hover-glow:hover {
+        border-color: var(--cosmic-accent, #0dcaf0) !important;
+        box-shadow: 0 0 15px rgba(13, 202, 240, 0.2);
+        transform: translateY(-5px);
+    }
+</style>

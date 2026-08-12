@@ -1,0 +1,71 @@
+﻿@using Orbit_2005.Models.ViewModels
+@model UserLoginViewModel
+
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = "Commander Login";
+}
+
+
+@if (TempData["error"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-danger border-danger bg-transparent text-danger d-flex justify-content-between align-items-center shadow-sm" role="alert">
+            <span> @TempData["error"]</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh; margin-top: 50px;">
+    <!-- الكارت الأساسي -->
+    <div class="card cosmic-card shadow-lg p-5" style="max-width: 450px; width: 100%; border-radius: 15px; background-color: rgba(20, 20, 30, 0.85); border: 1px solid var(--cosmic-accent, #0dcaf0);">
+
+        <!-- الهيدر واللوجو -->
+        <div class="text-center mb-4">
+            <div class="brand-logo mb-2" style="font-family: monospace; color: var(--cosmic-accent, #0dcaf0); letter-spacing: 2px; font-weight: bold;">
+                [ R2 ]
+            </div>
+            <h2 class="text-light fw-bold text-uppercase">Welcome Back</h2>
+            <p class="text-white-50">Enter your credentials to access the network.</p>
+        </div>
+
+        <form asp-controller="Account" asp-action="Login" method="post">
+
+            <!-- رسالة الخطأ العامة (لو الباسورد أو الإيميل غلط) -->
+            <div asp-validation-summary="ModelOnly" class="text-danger small mb-3 text-center fw-bold"></div>
+
+            <!-- حقل الإيميل -->
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="form-label cosmic-label text-info fw-bold">Email Address</label>
+                <input asp-for="Email" class="form-control cosmic-input bg-transparent text-light border-info" placeholder="commander@orbit.com" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <!-- حقل الباسورد -->
+            <div class="form-group mb-4">
+                <label asp-for="Password" class="form-label cosmic-label text-info fw-bold">Password</label>
+                <input asp-for="Password" type="password" class="form-control cosmic-input bg-transparent text-light border-info" placeholder="Enter your password..." />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <!-- زراير التحكم -->
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-info btn-cosmic py-2 fw-bold text-uppercase text-dark" style="letter-spacing: 2px;">
+                    Login to System
+                </button>
+                <a asp-controller="Account" asp-action="Register" class="btn btn-outline-secondary py-2 text-uppercase" style="letter-spacing: 1px;">
+                    Create New Account
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- سكريبتات الـ Validation زي ما هي -->
+@section Scripts
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}
