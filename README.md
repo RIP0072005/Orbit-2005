@@ -1,7 +1,6 @@
 # 🌌 Orbit 2005 - Galactic Market
 
 ![Orbit 2005 Banner](docs/HomeView.png) 
-*(Note: Replace with a screenshot of your homepage)*
 
 **Orbit 2005** is a full-stack e-commerce web application built with **ASP.NET Core MVC**. Designed with a unique "Cosmic/Space" theme, it serves as a galactic marketplace where explorers can trade materials (Titanium, Plasma Cores, Dark Matter) across different planets.
 
