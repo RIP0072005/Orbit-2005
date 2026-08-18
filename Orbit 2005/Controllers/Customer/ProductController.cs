@@ -14,11 +14,11 @@ namespace Orbit_2005.Controllers.Customer
         }
         // shoping page, product details(user), planet products
         [Route("{search:alpha?}")]
-        public IActionResult Index(string? search)
+        public IActionResult Index(string? search, int page = 1) 
         {
-
             var products = productService.OrderedByNewest();
             ViewBag.sorted = "date";
+            
             if(search == "low")
             {
                 products = productService.OrderedByPrice();
@@ -29,11 +29,31 @@ namespace Orbit_2005.Controllers.Customer
                 products = productService.OrderedByPriceDesc();
                 ViewBag.sorted = "high";
             }
+
+            // ==========================================
+            // بداية لوجيك الـ Pagination
+            // ==========================================
+            int pageSize = 12; // 12 منتج في الصفحة (عشان الـ Grid 3 عواميد فتبان متناسقة 4 صفوف)
+            int totalItems = products.Count(); // إجمالي عدد المنتجات في الداتابيز
+            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize); // حساب عدد الصفحات
+
+            // حماية بسيطة: لو اليوزر كتب رقم صفحة أقل من 1 أو أكبر من المتاح
+            if (page < 1) page = 1;
+            if (page > totalPages && totalPages > 0) page = totalPages;
+
+            // قص المنتجات (Skip and Take)
+            var paginatedProducts = products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            // تمرير الأرقام للـ View عشان شريط الصفحات اللي تحت يشتغل
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalItems = totalItems;
+            // ==========================================
+
             ViewBag.planets = productService.GetAllCategories();
-            Random rand = new Random();
-            // نسبة 12.5% إن العميل يلاقي موارد وهو بيقلب في الصفحة
-            ViewBag.HasLoot = rand.Next(1, 101) <= 12.3;
-            return View("~/Views/Customer/Product/Index.cshtml", products);
+            
+            // لاحظ إننا بنبعت paginatedProducts دلوقتي مش products العادية
+            return View("~/Views/Customer/Product/Index.cshtml", paginatedProducts); 
         }
 
         [Route("planets")]
@@ -50,9 +70,10 @@ namespace Orbit_2005.Controllers.Customer
             if (product == null)
                 return NotFound();
 
-            Random rand = new Random();
-            ViewBag.HasLoot = rand.Next(1, 101) <= 12.5;
+                Random rand = new Random();
+                ViewBag.HasLoot = rand.Next(1, 101) <= 15;
             return View("~/Views/Customer/Product/Details.cshtml", product);
         }
+
     }
 }

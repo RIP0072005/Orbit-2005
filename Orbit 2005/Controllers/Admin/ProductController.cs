@@ -6,9 +6,11 @@ using FluentValidation.AspNetCore;
 using Orbit_2005.Repositories;
 using Orbit_2005.Services;
 using Orbit_2005.Data;
+using Orbit_2005.Filters;
 
 namespace Orbit_2005.Controllers.Admin
 {
+    [AdminAuth]
     [Route("admin/product")]
     public class ProductController : Controller
     {
@@ -144,5 +146,6 @@ namespace Orbit_2005.Controllers.Admin
                 validationResult.AddToModelState(this.ModelState, "");
             }
         }
+
     }
 }

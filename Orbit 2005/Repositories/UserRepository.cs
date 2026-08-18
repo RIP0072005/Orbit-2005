@@ -36,6 +36,16 @@ namespace Orbit_2005.Repositories
             return context.Users.Find(id);
         }
 
+        public User GetByIDWithDetails(int id)
+        {
+            return context.Users
+                .AsNoTracking()
+                .Include(u => u.CartItems)
+                .Include(u => u.Orders)
+                .Include(u => u.Planet)
+                .FirstOrDefault(u => u.Id == id);
+        }
+
         public void Delete(User entity)
         {
             context.Users.Remove(entity);

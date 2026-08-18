@@ -65,8 +65,8 @@
                         <p class="card-text text-white-50 small">@item.Description</p>
                     </div>
                     <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center pb-3">
-                        <span class="text-success fw-bold fs-5">$@item.Price</span>
-                        <button class="btn btn-sm btn-info text-dark fw-bold"><a asp-area="Customer" asp-controller="Prduct" asp-action="Details" asp-route-id="@item.Id">Add to Cart</a></button>
+                        <span class="text-success fw-bold fs-5">$@item.Price</span> <!-- item.Price -->
+                        <a asp-area="Customer" asp-controller="Product" asp-action="details" asp-route-id="@item.Id" class="btn btn-sm btn-warning text-dark fw-bold">More Details</a>
                     </div>
                 </div>
             </div>

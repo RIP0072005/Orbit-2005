@@ -2,12 +2,14 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Orbit_2005.Data;
+using Orbit_2005.Filters;
 using Orbit_2005.Models;
 using Orbit_2005.Repositories;
 using Orbit_2005.Services;
 
 namespace Orbit_2005.Controllers.Admin
 {
+    [AdminAuth]
     [Route("admin/planets")]
     public class CategoryController : Controller
     {
@@ -102,6 +104,7 @@ namespace Orbit_2005.Controllers.Admin
             return RedirectToAction("Index");
         }
 
+        // 
         private void ValidateData(Planet p, IValidator<Planet> validator)
         {
             var validationResult = validator.Validate(p);
@@ -111,6 +114,8 @@ namespace Orbit_2005.Controllers.Admin
                 validationResult.AddToModelState(this.ModelState, "");
             }
         }
+
+
 
     }
 }

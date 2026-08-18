@@ -1,10 +1,13 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Orbit_2005.Filters;
 using Orbit_2005.Models;
 using Orbit_2005.Services;
 
 namespace Orbit_2005.Controllers.Admin
 {
+    [AdminAuth]
     [Route("admin/user")]
     public class UserController : Controller
     {
@@ -25,7 +28,7 @@ namespace Orbit_2005.Controllers.Admin
         [Route("{id:int}")]
         public IActionResult Details(int id)
         {
-            var user = userService.GetById(id);
+            var user = userService.GetByIdWithDetails(id);
             if (user == null)
             {
                 return NotFound();
@@ -36,7 +39,7 @@ namespace Orbit_2005.Controllers.Admin
         [Route("create")]
         public IActionResult Create()
         {
-            ViewBag.planets = userService.GetAllPlanets();
+            ViewBag.planets = new SelectList(userService.GetAllPlanets(), "Id", "Name");
             return View("~/Views/Admin/User/Create.cshtml");
         }
 
@@ -68,7 +71,7 @@ namespace Orbit_2005.Controllers.Admin
                 return NotFound();
             }
 
-            ViewBag.planets = userService.GetAllPlanets();
+            ViewBag.planets = ViewBag.planets = new SelectList(userService.GetAllPlanets(), "Id", "Name");
             return View("~/Views/Admin/User/Update.cshtml", u);
         }
 
@@ -84,7 +87,7 @@ namespace Orbit_2005.Controllers.Admin
                 return RedirectToAction("index");
             }
             TempData["errorMsg"] = "Fill in required Fields";
-            ViewBag.planets = userService.GetAllPlanets();
+            ViewBag.planets = new SelectList(userService.GetAllPlanets(), "Id", "Name");
             return View("~/Views/Admin/User/Update.cshtml", user);
         }
 

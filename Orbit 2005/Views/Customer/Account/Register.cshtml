@@ -9,7 +9,6 @@
     <div class="card cosmic-card shadow-lg p-5" style="max-width: 500px; width: 100%; border-radius: 15px; background-color: rgba(20, 20, 30, 0.85); border: 1px solid var(--cosmic-accent, #0dcaf0);">
 
         <div class="text-center mb-4">
-            <!-- لمسة البراندينج اللوجو -->
             <div class="brand-logo mb-2" style="font-family: monospace; color: var(--cosmic-accent, #0dcaf0); letter-spacing: 2px; font-weight: bold;">
                 [ R2 ]
             </div>
@@ -39,8 +38,9 @@
 
             <div class="form-group mb-4">
                 <label asp-for="planetId" class="form-label cosmic-label text-info fw-bold">Origin Planet (Category)</label>
+
                 <select asp-for="planetId" class="form-select cosmic-input bg-transparent text-light border-info" asp-items="ViewBag.planets">
-                    <option value="" disabled selected style="color: black;">-- Select a planet --</option>
+                    <option value="" disabled selected class="text-info bg-dark">-- Select a planet --</option>
                 </select>
                 <span asp-validation-for="planetId" class="text-danger small"></span>
             </div>
@@ -57,3 +57,10 @@
         </form>
     </div>
 </div>
+
+<style>
+    .cosmic-input option {
+        background-color: #1a1a2e; /* لون كحلي غامق لايق مع الفضاء */
+        color: #ffffff; /* لون الكلام أبيض واضح */
+    }
+</style>

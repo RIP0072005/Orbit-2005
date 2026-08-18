@@ -32,13 +32,15 @@ namespace Orbit_2005.Controllers.Customer
             if (!validLogin)
             {
                 ModelState.AddModelError("Email", "Invalid Email or Password");
+                return View("~/Views/Customer/Account/Login.cshtml", userVM);
             }
 
             var user = userService.GetByEmail(userVM.Email);
 
+            var RoleValue = user.Role == UserRole.Regular ? "Regular" : "Bofteek";
             if (ModelState.IsValid)
             {
-                Response.Cookies.Append("Role", user.Role.ToString(), new CookieOptions() { Expires = DateTime.Now.AddHours(2) });
+                Response.Cookies.Append("Role", RoleValue);
                 Response.Cookies.Append("UserId", user.Id.ToString());
                 TempData["successfulSign"] = $"Welcome Back {user.Name}";
                 return RedirectToAction("Index", "Home", new { area = "Customer" });
@@ -88,7 +90,7 @@ namespace Orbit_2005.Controllers.Customer
         [Route("user/{id:int}")]
         public IActionResult Details(int id)
         {
-            var user = userService.GetById(id);
+            var user = userService.GetByIdWithDetails(id);
             if (user == null) 
                 return NotFound();
             return View("~/Views/Customer/Account/Details.cshtml", user);

@@ -14,13 +14,17 @@ namespace Orbit_2005.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Orbit_2005;Trusted_Connection=True;TrustServerCertificate=True;");
+            // استخدمنا الـ Standard Format وضفنا Encrypt=False
+            // online Db
+            optionsBuilder.UseSqlServer(@"Server=Orbit2005DB.mssql.somee.com;Database=Orbit2005DB;User Id=RIP_2005_SQLLogin_1;Password=v8xo6trbp1;TrustServerCertificate=True;Encrypt=False;");
+
+            // Local Db
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Orbit_2005;Trusted_Connection=True;TrustServerCertificate=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-
         }
     }
 }

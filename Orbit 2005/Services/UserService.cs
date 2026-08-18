@@ -33,6 +33,11 @@ namespace Orbit_2005.Services
             return userRepository.GetById(id);
         }
 
+        public User GetByIdWithDetails(int id)
+        {
+            return userRepository.GetByIDWithDetails(id);
+        }
+
         public User GetByEmail(string email)
         {
             return userRepository.GetAll().FirstOrDefault(u => u.Email == email);

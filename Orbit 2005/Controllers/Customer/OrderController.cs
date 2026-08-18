@@ -23,9 +23,15 @@ namespace Orbit_2005.Controllers.Customer
                 TempData["error"] = "log in to access your orders";
                 return RedirectToAction("Login", "Account", new {Area = "Customer"});
             }
-            var orders = orderService.GetOrders(userid.Value);
+            var user = orderService.GetUserById(userid.Value);
 
             ViewBag.totalCost = orderService.TotalCost(userid.Value);
+            if (user.GalacticCredits < ViewBag.totalCost)
+            {
+                TempData["error"] = "Insufficient Galactic Credits. Please recharge your wallet.";
+                return RedirectToAction("Index", "Cart", new { Area = "Customer" });
+            }
+            var orders = orderService.GetOrders(userid.Value);
             if (ViewBag.totalCost == 0)
             {
                 TempData["error"] = "Your cargo hold is empty!";

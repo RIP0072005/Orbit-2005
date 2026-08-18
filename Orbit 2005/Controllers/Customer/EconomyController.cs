@@ -21,7 +21,11 @@ namespace Orbit_2005.Controllers.Customer
         public IActionResult ClaimLoot()
         {
             var userId = GetUserId();
-            if (userId == null) return Unauthorized();
+            if (userId == null)
+            {
+                TempData["error"] = "U need to login to start collecting the loot ):";
+                return RedirectToAction("Index", "Product", new { area = "Customer" });
+            }
 
             var user = userRepository.GetById(userId.Value);
 
@@ -108,7 +112,7 @@ namespace Orbit_2005.Controllers.Customer
 
             // نسبة النجاح في التهريب 65%، والمكسب 3 أضعاف
             Random rand = new Random();
-            if (rand.Next(1, 101) <= 65)
+            if (rand.Next(1, 101) <= 35)
             {
                 double earned = amountToSmuggle * (basePrice * 3);
                 user.GalacticCredits += earned;

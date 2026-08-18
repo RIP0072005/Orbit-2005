@@ -78,7 +78,7 @@
             
             <!-- Sorting & Results count -->
             <div class="d-flex justify-content-between align-items-center mb-4 p-2 rounded" style="background-color: rgba(255,255,255,0.05);">
-                <span class="text-white-50">Showing <span class="text-light fw-bold">6</span> items</span>
+                <span class="text-white-50">Showing <span class="text-light fw-bold">@Model.Count()</span> out of <span class="text-light fw-bold">@ViewBag.TotalItems</span> items</span>
                 <form asp-area="Customer" asp-controller="Product" asp-action="Index">
                     <select name="search" onchange="this.form.submit()" class="form-select w-auto bg-transparent text-light border-secondary small">
                         <option value="date" selected="@(ViewBag.sorted == "date")" style="color: black;">Sort by: Newest Arrivals</option>
@@ -113,13 +113,71 @@
                 }
                 
             </div>
-            <!-- Pagination (ترقيم الصفحات لو المنتجات كتير) -->
+            <!-- Pagination (ترقيم الصفحات الديناميكي المتجاوب مع الموبايل) -->
             <nav class="mt-4">
-                <ul class="pagination justify-content-center custom-pagination">
-                    <li class="page-item disabled"><a class="page-link bg-transparent text-secondary border-secondary" href="#">Previous</a></li>
-                    <li class="page-item active"><a class="page-link bg-info text-dark border-info" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link bg-transparent text-info border-secondary" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link bg-transparent text-info border-secondary" href="#">Next</a></li>
+                <ul class="pagination justify-content-center custom-pagination flex-wrap">
+
+                    @{
+                        int totalPages = ViewBag.TotalPages;
+                        int currentPage = ViewBag.CurrentPage;
+                        int maxVisible = 4; // أقصى عدد زراير يظهر في نفس الوقت
+
+                        // حسبة بسيطة عشان نظبط البداية والنهاية بتاعة الأرقام اللي هتتعرض
+                        int startPage = Math.Max(1, currentPage - (maxVisible / 2));
+                        int endPage = Math.Min(totalPages, startPage + maxVisible - 1);
+
+                        // تظبيط لو إحنا في آخر الصفحات عشان نحافظ دايما على عرض 4 زراير
+                        if (endPage - startPage + 1 < maxVisible)
+                        {
+                            startPage = Math.Max(1, endPage - maxVisible + 1);
+                        }
+                    }
+
+                    <!-- زرار السابق -->
+                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                        <a class="page-link bg-transparent text-secondary border-secondary"
+                           href="?search=@ViewBag.sorted&page=@(currentPage - 1)">Previous</a>
+                    </li>
+
+                    <!-- زرار لأول صفحة (عشان اليوزر ميتوهش لو هو في صفحة 10 مثلا) -->
+                    @if (startPage > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link bg-transparent text-info border-secondary" href="?search=@ViewBag.sorted&page=1">1</a>
+                        </li>
+                        @if (startPage > 2)
+                        {
+                            <li class="page-item disabled"><span class="page-link bg-transparent text-secondary border-secondary">...</span></li>
+                        }
+                    }
+
+                    <!-- أرقام الصفحات المتحركة -->
+                    @for (int i = startPage; i <= endPage; i++)
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a class="page-link @(i == currentPage ? "bg-info text-dark border-info" : "bg-transparent text-info border-secondary")"
+                               href="?search=@ViewBag.sorted&page=@i">@i</a>
+                        </li>
+                    }
+
+                    <!-- زرار لآخر صفحة (عشان اليوزر يعرف الإجمالي) -->
+                    @if (endPage < totalPages)
+                    {
+                        @if (endPage < totalPages - 1)
+                        {
+                            <li class="page-item disabled"><span class="page-link bg-transparent text-secondary border-secondary">...</span></li>
+                        }
+                        <li class="page-item">
+                            <a class="page-link bg-transparent text-info border-secondary" href="?search=@ViewBag.sorted&page=@totalPages">@totalPages</a>
+                        </li>
+                    }
+
+                    <!-- زرار التالي -->
+                    <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                        <a class="page-link bg-transparent text-secondary border-secondary"
+                           href="?search=@ViewBag.sorted&page=@(currentPage + 1)">Next</a>
+                    </li>
+
                 </ul>
             </nav>
 

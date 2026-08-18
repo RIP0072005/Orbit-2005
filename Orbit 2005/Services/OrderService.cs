@@ -96,6 +96,11 @@ namespace Orbit_2005.Services
         {
             return orderRepository.GetByIdWithDetails(orderId);
         }
+
+        public User GetUserById(int id)
+        {
+            return userRepository.GetById(id);
+        }
     }
     
 }
