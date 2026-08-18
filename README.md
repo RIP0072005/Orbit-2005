@@ -50,7 +50,7 @@ To run this project locally on your machine:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/YourUsername/Orbit_2005.git](https://github.com/YourUsername/Orbit_2005.git)
+   git clone [https://github.com/RIP0072005/Orbit_2005.git](https://github.com/RIP0072005/Orbit_2005.git)
 
 
 Database Configuration:
@@ -74,6 +74,6 @@ Ahmed Hegazy
 
 Computer Engineering Student & Full-Stack Developer
 
-[LinkedIn Profile](www.linkedin.com/in/ahmed-hegazy-dev)
+[LinkedIn Profile](https://www.linkedin.com/in/ahmed-hegazy-dev)
 
 [GitHub Profile](https://github.com/RIP0072005/)
